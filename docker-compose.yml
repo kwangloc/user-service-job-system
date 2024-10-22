@@ -1,0 +1,21 @@
+services:
+  api:
+    build: .
+    image: lucas1409/pbl6_user_service:latest
+    ports:
+      - "3000:3009"
+    environment:
+      - NODE_ENV=production
+      - JWT_PRIVATE_KEY=lucas1409
+      - MONGODB_URI=mongodb://mongodb:27017/userdb
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:4.0-xenial
+    expose:
+      - "27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

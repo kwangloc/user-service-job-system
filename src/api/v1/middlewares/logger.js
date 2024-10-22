@@ -1,7 +1,7 @@
 const winston = require('winston');
 require('winston-mongodb');
 const { MongoClient } = require('mongodb');
-const mongoUrl = 'mongodb://localhost:27017/vidly';
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/user_service';
 
 // Create a Winston logger
 const logger = winston.createLogger({
@@ -19,13 +19,13 @@ const logger = winston.createLogger({
         // Console transport for development
         new winston.transports.Console({ format: winston.format.simple() }),
         // Write all logs with importance level of `error` or less to `error.log`
-        new winston.transports.File({ filename: 'error.log', level: 'error' }),
+        new winston.transports.File({ filename: './logs/error.log', level: 'error' }),
         // Write all logs with importance level of `info` or less to `combined.log`
-        new winston.transports.File({ filename: 'combined.log' }),
+        new winston.transports.File({ filename: './logs/combined.log' }),
 
         // MongoDB transport
         new winston.transports.MongoDB({
-            db: mongoUrl,
+            db: mongoUri,
             options: { useUnifiedTopology: true },
             collection: 'logs',
             level: 'info',
@@ -42,8 +42,8 @@ const logger = winston.createLogger({
 // Ensure MongoDB connection
 async function ensureConnection() {
     try {
-        //   const client = new MongoClient(mongoUrl, { useUnifiedTopology: true });
-        const client = new MongoClient(mongoUrl);
+        //   const client = new MongoClient(mongoUri, { useUnifiedTopology: true });
+        const client = new MongoClient(mongoUri);
         await client.connect();
         console.log('Connected to MongoDB');
         client.close();
@@ -54,7 +54,7 @@ async function ensureConnection() {
 }
 
 // Ensure MongoDB connection before starting your app
-ensureConnection();
+// ensureConnection();
 
 // If we're not in production then log to the `console` with the format:
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
