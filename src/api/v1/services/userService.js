@@ -1,11 +1,34 @@
+const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
+//
 const bcrypt = require('bcrypt'); // hashing
 
 const { User, validateUser } = require("../models/userModel");
 const { isValidId, authUser } = require("../validations/validators");
 
 // For testing
-exports.test = async (req) => {
-  throw new Error(`this is an error from testing`);
+exports.test_1 = async (req) => {
+  console.log("***********");
+  console.log("Got a request.");
+  console.log("Created user.");
+  const newUser = {
+    id: req.body._id,
+    name: req.body.name,
+    email: req.body.email
+  };
+  // await publishEvent('user.created', newUser);  
+  return "created";
+};
+
+exports.test_2 = async (req) => {
+  console.log("***********");
+  console.log("Got a request.");
+  console.log("Created job.");
+  const newJob = {
+    id: req.body._id,
+    title: req.body.title
+  };
+  // await publishEvent('job.created', newJob);  
+  return "created";
 };
 
 // Profile
@@ -116,6 +139,8 @@ exports.updateUser = async (req) => {
     const updateFields = {};
     if (req.body.name) updateFields.name = req.body.name;
     if (req.body.location) updateFields.location = req.body.location;
+    if (req.body.phone) updateFields.phone = req.body.phone;
+    if (req.body.dateOfBirth) updateFields.dateOfBirth = req.body.dateOfBirth;
 
     const user = await User.findByIdAndUpdate(
       req.user._id,

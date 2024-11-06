@@ -1,9 +1,18 @@
 const userService = require('../services/userService');
 
-exports.test = async (req, res, next) => {
+exports.test_1 = async (req, res, next) => {
   try {
-    const result = await userService.test(req);
+    const result = await userService.test_1(req);
     console.log(typeof result);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.test_2 = async (req, res, next) => {
+  try {
+    const result = await userService.test_2(req);
     res.status(200).json(result);
   } catch (err) {
     next(err);

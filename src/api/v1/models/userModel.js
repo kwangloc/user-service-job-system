@@ -1,7 +1,7 @@
 const Joi = require("joi");
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken'); // json web token
-const config = require('config'); // configurations
+//const config = require('config'); // configurations
 //const { objectIdValidator } = require('../validations/validators'); // To check objectId of sub document
 
 // DB schema
@@ -43,9 +43,16 @@ const userSchema = mongoose.Schema({
         minlength: 6,
         maxlengh: 1024 // hash password
     },
-    location: {
+    phone: {
         type: String,
-        require: true
+        default: ''
+    },
+    dateOfBirth: {
+        type: Date,
+        default: null
+    },
+    location: {
+        type: String
     },
     skills: {
         type: [skillSchema],
@@ -71,7 +78,8 @@ const userSchema = mongoose.Schema({
 // }
 
 userSchema.methods.generateAuthToken = function() {
-    const token = jwt.sign({_id: this._id, name: this.name, isAdmin: this.isAdmin}, config.get('jwtPrivateKey'));
+    // const token = jwt.sign({_id: this._id, name: this.name, isAdmin: this.isAdmin}, config.get('jwtPrivateKey'));
+    const token = jwt.sign({_id: this._id, name: this.name, isAdmin: this.isAdmin}, process.env.JWT_PRIVATE_KEY);
     return token;
 }
 
@@ -83,8 +91,7 @@ function validateUser(user) {
     const schema = Joi.object({
         name: Joi.string().min(2).max(50).required(),
         password: Joi.string().min(6).max(1024).required(),
-        email: Joi.string().min(2).max(255).required().email(), // plain password
-        location: Joi.string().min(1).required()
+        email: Joi.string().min(2).max(255).required().email() // plain password
     });
     return schema.validate(user);;
 }

@@ -1,10 +1,12 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const router = express.Router();
-const auth = require('../middlewares/authorization')
+const auth = require('../middlewares/authentication')
 const admin = require('../middlewares/admin');
 
-router.post('/test', userController.test);
+// Testing route
+// router.post('/test_1', userController.test_1);
+// router.post('/test_2', userController.test_2);
 
 // Public routes
 // router.post('/forgot-password', userController.forgotPassword);
