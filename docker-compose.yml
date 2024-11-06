@@ -6,7 +6,7 @@ services:
       - "3000:3009"
     environment:
       - NODE_ENV=production
-      - JWT_PRIVATE_KEY=lucas1409
+      - JWT_PRIVATE_KEY=pbl6_jwtPrivateKey
       - MONGODB_URI=mongodb://mongodb:27017/userdb
     depends_on:
       - mongodb

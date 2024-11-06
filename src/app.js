@@ -1,9 +1,13 @@
 require('dotenv').config();
 
 const express = require('express');
+const cors = require('cors');
+
+
 const logger = require('./api/v1/middlewares/logger');
 require('./api/v1/startup/logging.js')(logger); // Logging
 const app = express();
+app.use(cors()); // cho phép tất cả các nguồn gốc
 
 // RabbitMQ
 const { setupRabbitMQ } = require('./rabbitmq/rabbitmqSetup');

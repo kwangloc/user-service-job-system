@@ -2,7 +2,7 @@ const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
 //
 const bcrypt = require('bcrypt'); // hashing
 
-const { User, validateUser } = require("../models/userModel");
+const { User, validateUser, validateSkill, validateExp, validateEdu } = require("../models/userModel");
 const { isValidId, authUser } = require("../validations/validators");
 
 // For testing
@@ -57,8 +57,8 @@ exports.getUser = async (req) => {
 
 exports.createUser = async (req) => {
   // 1. validate req.body
-  const { err } = validateUser(req.body);
-  if (err) throw new Error(JSON.stringify(err.details));
+  const { error } = validateUser(req.body);
+  if (error) throw new Error(JSON.stringify(error.details));
   try {
     // 2. check existing email
     let existingUser = await User.findOne({ email: req.body.email });
@@ -88,8 +88,8 @@ exports.createUser = async (req) => {
 exports.authUser = async (req) => {
   try {
     // 1. validate req.body
-    const { err } = authUser(req.body);
-    if (err) {
+    const { error } = authUser(req.body);
+    if (error) {
       const validationError = new Error(JSON.stringify(err.details));
       validationError.statusCode = 400;
       throw validationError;
@@ -125,8 +125,8 @@ exports.authUser = async (req) => {
 
 exports.updateUser = async (req) => {
   // 1. validate req.body
-  const { err } = validateUser(req.body);
-  if (err) throw new Error(JSON.stringify(err.details));
+  const { error } = validateUser(req.body);
+  if (error) throw new Error(JSON.stringify(err.details));
   // 2. find user
   // val userId
   if (!isValidId(req.user._id)) {
@@ -183,11 +183,11 @@ exports.deleteUser = async (req) => {
   }
 };
 
-// Skills
+// SKILLS
 exports.getUserSkills = async (req) => {
   const { userId } = req.params;
   // val userId
-  if (!isValidId(_id)) {
+  if (!isValidId(userId)) {
     const error = new Error("Invalid userId");
     error.statusCode = 500;
     throw error;
@@ -207,19 +207,16 @@ exports.getUserSkills = async (req) => {
 };
 
 exports.addUserSkill = async (req) => {
-  if (!isValidId(req.user._id)) {
-    const error = new Error("Invalid userId");
-    error.statusCode = 500;
-    throw error;
-  }
-
   // val skill object
+  const { error } = validateSkill(req.body);
+  if (error) throw new Error(JSON.stringify(error.details));
+
   const { skill } = req.body;
-  if (!validateSkill(skill)) {
-    const error = new Error("Missing required fields");
-    error.statusCode = 500;
-    throw error;
-  }
+  // if (!validateSkill(skill)) {
+  //   const error = new Error("Missing required fields");
+  //   error.statusCode = 500;
+  //   throw error;
+  // }
 
   if (!isValidId(skill._id)) {
     const error = new Error("Invalid skillId");
@@ -268,7 +265,149 @@ exports.removeUserSkill = async (req) => {
   }
 };
 
-// Saved-jobs
+// EXPERIENCE
+exports.getUserExp = async (req) => {
+  const { userId } = req.params;
+  // val userId
+  if (!isValidId(userId)) {
+    const error = new Error("Invalid userId");
+    error.statusCode = 500;
+    throw error;
+  }
+
+  try {
+    const user = await User.findById(userId).select("experience");
+    if (!user) {
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw error;
+    }
+    return user.experience;
+  } catch (err) {
+    throw new Error(`Failed to getUserExp: ${err.message}`);
+  }
+};
+
+exports.addUserExp = async (req) => {
+  // val skill object
+  const { experience } = req.body;
+  console.log("experience: ");
+  console.group(experience);
+
+  const { error } = validateExp(experience);
+  console.log("@@@@@@@@@");
+  console.log(error);
+  console.log("@@@@@@@@@");
+  if ( error ) throw new Error(JSON.stringify(error.details));
+
+  // add skill
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $addToSet: { experience: experience } },
+      { new: true }
+    ).select("experience");
+    return user.experience;
+  } catch (err) {
+    throw new Error(`Failed to addUserExp: ${err.message}`);
+  }
+};
+
+exports.removeUserExp = async (req) => {
+  // val expId
+  const { expId } = req.body;
+
+  console.log(req.user._id);
+  console.log(expId);
+
+  if (!isValidId(expId)) {
+    const error = new Error("Invalid expId");
+    error.statusCode = 500;
+    throw error;
+  }
+  
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $pull: { experience: { _id: expId } } },
+      { new: true }
+    ).select("experience");
+    return user.skills;
+  } catch (err) {
+    throw new Error(`Failed to removeUserExp: ${err.message}`);
+  }
+};
+
+// EDUCATION
+exports.getUserEdu = async (req) => {
+  const { userId } = req.params;
+  // val userId
+  if (!isValidId(userId)) {
+    const error = new Error("Invalid userId");
+    error.statusCode = 500;
+    throw error;
+  }
+
+  try {
+    const user = await User.findById(userId).select("education");
+    if (!user) {
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw error;
+    }
+    return user.education;
+  } catch (err) {
+    throw new Error(`Failed to getUserEdu: ${err.message}`);
+  }
+};
+
+exports.addUserEdu = async (req) => {
+  // val body
+  const { education } = req.body;
+  console.log(education);
+
+  const { error } = validateEdu(education);
+  if ( error ) throw new Error(JSON.stringify(error.details));
+
+  // add skill
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $addToSet: { education: education } },
+      { new: true }
+    ).select("education");
+    return user.education;
+  } catch (err) {
+    throw new Error(`Failed to addUserEdu: ${err.message}`);
+  }
+};
+
+exports.removeUserEdu = async (req) => {
+  // val expId
+  const { eduId } = req.body;
+
+  console.log(req.user._id);
+  console.log(eduId);
+
+  if (!isValidId(eduId)) {
+    const error = new Error("Invalid expId");
+    error.statusCode = 500;
+    throw error;
+  }
+  
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $pull: { education: { _id: eduId } } },
+      { new: true }
+    ).select("education");
+    return user.skills;
+  } catch (err) {
+    throw new Error(`Failed to removeUserExp: ${err.message}`);
+  }
+};
+
+// SAVED-JOBS
 exports.getSavedJobs = async (req) => {
   try {
     const userId = req.user._id;
@@ -385,7 +524,7 @@ exports.unsaveJob = async (req) => {
   }
 };
 
-// Applied-jobs
+// APPLIED-JOBS
 exports.getAppliedJobs = async (req) => {
   try {
     const userId = req.user._id;
@@ -486,11 +625,20 @@ exports.withdrawApp = async (req) => {
 };
 
 // # Validation
-function validateSkill(skill) {
-  if (!skill || typeof skill !== 'object') return false;
-  const requiredKeys = ['_id', 'title'];
-  for (const key of requiredKeys) {
-    if (!(key in skill)) return false;
-  }
-  return true;
-}
+// function validateSkill(skill) {
+//   if (!skill || typeof skill !== 'object') return false;
+//   const requiredKeys = ['_id', 'title'];
+//   for (const key of requiredKeys) {
+//     if (!(key in skill)) return false;
+//   }
+//   return true;
+// }
+
+// function validateExp(exp) {
+//   if (!exp || typeof exp !== 'object') return false;
+//   const requiredKeys = ['title', 'description', 'duration'];
+//   for (const key of requiredKeys) {
+//     if (!(key in skill)) return false;
+//   }
+//   return true;
+// }

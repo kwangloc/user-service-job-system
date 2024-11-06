@@ -29,16 +29,17 @@ router.post('/skills', auth, userController.addUserSkill);
 router.delete('/skills/', auth, userController.removeUserSkill);
 
 // Experiences
-// router.get('/experience', userController.getUserExperience);
-// router.post('/experience', userController.addUserExperience);
-// router.put('/experience/:experienceId', userController.updateUserExperience);
-// router.delete('/experience/:experienceId', userController.removeUserExperience);
+router.get('/exp/:userId', userController.getUserExp);
+router.post('/exp', auth, userController.addUserExp);
+// router.put('/exp/:expId', userController.updateUserExp);
+router.delete('/exp/', auth, userController.removeUserExp);
 
 // Education
-// router.get('/education', userController.getUserEducation);
-// router.post('/education', userController.addUserEducation);
+router.get('/edu/:userId', userController.getUserEdu);
+router.post('/edu', auth, userController.addUserEdu);
 // router.put('/education/:educationId', userController.updateUserEducation);
-// router.delete('/education/:educationId', userController.removeUserEducation);
+router.delete('/edu/', auth, userController.removeUserEdu);
+
 
 // Saved-jobs
 router.get('/savedJobs/', auth, userController.getSavedJobs);

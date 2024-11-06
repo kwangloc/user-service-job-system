@@ -81,7 +81,7 @@ exports.deleteUser = async (req, res, next) => {
   }
 };
 
-// Skills
+// SKILLS
 exports.getUserSkills = async (req, res, next) => {
   try {
     const skills = await userService.getUserSkills(req);
@@ -109,8 +109,61 @@ exports.removeUserSkill = async (req, res, next) => {
   }
 };
 
-// Experience
+// EXPERIENCE
+exports.getUserExp = async (req, res, next) => {
+  try {
+    const exp = await userService.getUserExp(req);
+    res.status(200).json(exp);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.addUserExp = async (req, res, next) => {
+  try {
+    const exp = await userService.addUserExp(req);
+    res.status(200).json(exp);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.removeUserExp = async (req, res, next) => {
+  try {
+    const exp = await userService.removeUserExp(req);
+    res.status(200).json(exp);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Education
+exports.getUserEdu = async (req, res, next) => {
+  try {
+    const edu = await userService.getUserEdu(req);
+    res.status(200).json(edu);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.addUserEdu = async (req, res, next) => {
+  try {
+    const edu = await userService.addUserEdu(req);
+    res.status(200).json(edu);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.removeUserEdu = async (req, res, next) => {
+  try {
+    const edu = await userService.removeUserEdu(req);
+    res.status(200).json(edu);
+  } catch (err) {
+    next(err);
+  }
+};
 
 // Saved-jobs
 exports.getSavedJobs = async (req, res, next) => {

@@ -25,6 +25,44 @@ const skillSchema = mongoose.Schema({
     }
 })
 
+const expSchema = mongoose.Schema({
+    company: {
+        type: String,
+        required: true
+    },
+    position: {
+        type: String,
+        required: true
+    },
+    duration: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    }
+})
+
+const eduSchema = mongoose.Schema({
+    school: {
+        type: String,
+        required: true
+    },
+    major: {
+        type: String,
+        required: true
+    },
+    duration: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    }
+})
+
 const userSchema = mongoose.Schema({
     name: {
         type: String,
@@ -58,10 +96,10 @@ const userSchema = mongoose.Schema({
         type: [skillSchema],
     },
     experience: {
-        type: Array,
+        type: [expSchema],
     },
     education: {
-        type: Array,
+        type: [eduSchema],
     },
     savedJobs: {
         type: [jobSchema]
@@ -72,11 +110,6 @@ const userSchema = mongoose.Schema({
 });
 
 // gen jwt
-// userSchema.methods.generateAuthToken = function() {
-//     const token = jwt.sign({_id: this._id, isAdmin: this.isAdmin}, config.get('jwtPrivateKey'));
-//     return token;
-// }
-
 userSchema.methods.generateAuthToken = function() {
     // const token = jwt.sign({_id: this._id, name: this.name, isAdmin: this.isAdmin}, config.get('jwtPrivateKey'));
     const token = jwt.sign({_id: this._id, name: this.name, isAdmin: this.isAdmin}, process.env.JWT_PRIVATE_KEY);
@@ -93,11 +126,42 @@ function validateUser(user) {
         password: Joi.string().min(6).max(1024).required(),
         email: Joi.string().min(2).max(255).required().email() // plain password
     });
-    return schema.validate(user);;
+    return schema.validate(user);
+}
+
+function validateSkill(skill) {
+    const schema = Joi.object({
+        _id: Joi.string().required(),
+        title: Joi.string().min(2).max(1024).required()
+    });
+    return schema.validate(skill);
+}
+
+function validateExp(exp) {
+    const schema = Joi.object({
+        company: Joi.string().min(2).max(255).required(),
+        position: Joi.string().min(2).max(255).required(),
+        duration: Joi.string().min(2).max(255).required(), 
+        description: Joi.string().min(2).max(1024).required(),
+    });
+    return schema.validate(exp);
+}
+
+function validateEdu(edu) {
+    const schema = Joi.object({
+        school: Joi.string().min(2).max(255).required(),
+        major: Joi.string().min(2).max(1024).required(),
+        duration: Joi.string().min(2).max(255).required(),
+        description: Joi.string().min(2).max(1024).required(),
+    });
+    return schema.validate(edu);
 }
 
 module.exports = {
     userSchema,
     User,
-    validateUser
+    validateUser,
+    validateSkill,
+    validateExp,
+    validateEdu
 };
