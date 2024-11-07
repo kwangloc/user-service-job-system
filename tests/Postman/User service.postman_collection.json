@@ -1,0 +1,792 @@
+{
+	"info": {
+		"_postman_id": "f3f685b0-c924-4756-827c-d0676f6437cc",
+		"name": "User service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37965156"
+	},
+	"item": [
+		{
+			"name": "TESTING 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"abc12345678\",\r\n    \"name\": \"abc\",\r\n    \"email\": \"abc3@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/users/test_1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"users",
+						"test_1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TESTING 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"abc123\",\r\n    \"title\": \"Hiring senior python developer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/users/test_2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"users",
+						"test_2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"lucas1@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZkNThkNDU0ZTg3ZjUwNjBhOWFiZTAiLCJuYW1lIjoiYWJjIiwiaWF0IjoxNzI5NDY0MjQ2fQ.V5IdwKC4iD8_dGRfmqiknCUH3OcuqY-H8oQTU82TJMU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/users/a/profile/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"a",
+						"profile",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1 profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/profile/672ae047d7249349356e090f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"profile",
+						"672ae047d7249349356e090f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhZTA0N2Q3MjQ5MzQ5MzU2ZTA5MGYiLCJuYW1lIjoibHVjYXMxIiwiaWF0IjoxNzMwODYzMjE2fQ.0QqW3f44fipy-4ZYE_S0UbLnT0ODdo01G1_RWr8NqNo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"location\": \"Danang\",\r\n    \"phone\": \"0123\",\r\n    \"dateOfBirth\": \"2024-11-06\",\r\n    \"asd\": \"asd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test authorization",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZjMzZmYmVhZDJiMzE4MDkwYTM0ZTAiLCJuYW1lIjoibHVjYXM1IiwiaWF0IjoxNzI5NDU2NDk4fQ.WirvbshE6v9wk5HOlud1Wr2vP1Mi5pRFne2_cuQtCMw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"66fc35c657aa0e85d3ddc240\",\r\n    \"name\": \"lucas5\",\r\n    \"location\": \"Hanoi\",\r\n    \"asd\": \"asd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"lucas3\",\r\n    \"email\": \"lucas3@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE1ODFlNDM5MjdiZTAxNzlmNzhkOGIiLCJuYW1lIjoiTHVjYXMiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3Mjk0NjQyMDN9.fGwipCG9mZlRpQNkvk4TEr54M74k0L-dRsX6UyloX54",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/a/profile/66fc35c657aa0e85d3ddc240",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"a",
+						"profile",
+						"66fc35c657aa0e85d3ddc240"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "skills",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/skills/66f56ae57efc52e535ffbc4f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"skills",
+						"66f56ae57efc52e535ffbc4f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "skills",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZkNThkNDU0ZTg3ZjUwNjBhOWFiZTAiLCJuYW1lIjoibHVjYXMxeCIsImlhdCI6MTcyOTQ2NTExM30.e2i8RfpXhmib0NsELyryJ0knfPwZ0qeSLKWLmpwrLUA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"skill\": {\r\n        \"_id\": \"66f5675831015936064290bf\",\r\n        \"title\": \"Python\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/skills",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"skills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "skills",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZkNThkNDU0ZTg3ZjUwNjBhOWFiZTAiLCJuYW1lIjoibHVjYXMxeCIsImlhdCI6MTcyOTQ2NTExM30.e2i8RfpXhmib0NsELyryJ0knfPwZ0qeSLKWLmpwrLUA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"skillId\": \"66f5675831015936064290bf\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/skills/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"skills",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "exp",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/exp/672ae047d7249349356e090f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"exp",
+						"672ae047d7249349356e090f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "exp",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhZTA0N2Q3MjQ5MzQ5MzU2ZTA5MGYiLCJuYW1lIjoibHVjYXMxIiwiaWF0IjoxNzMwODYzMjE2fQ.0QqW3f44fipy-4ZYE_S0UbLnT0ODdo01G1_RWr8NqNo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"experience\": {\r\n        \"company\": \"qqq\",\r\n        \"position\": \"Frontend developer intern\",\r\n        \"description\": \"Developed client's side UI\",\r\n        \"duration\": \"2020-2021\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/exp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"exp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "exp",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhZTA0N2Q3MjQ5MzQ5MzU2ZTA5MGYiLCJuYW1lIjoibHVjYXMxIiwiaWF0IjoxNzMwODcxODQ2fQ.GMte9siODZum4SHRuOMC3_fAIt3z_EkLo6b2Kgu7R90",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"expId\": \"672af84875cd05141257d3b5\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/exp/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"exp",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edu",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/edu/672ae047d7249349356e090f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"edu",
+						"672ae047d7249349356e090f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edu",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhZTA0N2Q3MjQ5MzQ5MzU2ZTA5MGYiLCJuYW1lIjoibHVjYXMxIiwiaWF0IjoxNzMwODYzMjE2fQ.0QqW3f44fipy-4ZYE_S0UbLnT0ODdo01G1_RWr8NqNo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"education\": {\r\n        \"school\": \"DUT\",\r\n        \"major\": \"Computer Science\",\r\n        \"duration\": \"2021-2025\",\r\n        \"description\": \"Concentrate on NN and ML\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/edu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"edu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edu",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhZTA0N2Q3MjQ5MzQ5MzU2ZTA5MGYiLCJuYW1lIjoibHVjYXMxIiwiaWF0IjoxNzMwODYzMjE2fQ.0QqW3f44fipy-4ZYE_S0UbLnT0ODdo01G1_RWr8NqNo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"eduId\": \"672afa9079cf3ae6fd4ce3c5\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/edu/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"edu",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savedJobs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZjMzZmYmVhZDJiMzE4MDkwYTM0ZTAiLCJuYW1lIjoibHVjYXM1IiwiaWF0IjoxNzI5NTY0OTM4fQ.RehyGQNn7m3w_g6vjgX3zz0CpYUAiPUMNNbLQi_rouQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/savedJobs/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"savedJobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savedJobs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZjMzZmYmVhZDJiMzE4MDkwYTM0ZTAiLCJuYW1lIjoibHVjYXM1IiwiaWF0IjoxNzI5NTY1Mjk2fQ.lisJPXHZSQKHm2rk98WWlsenmFq2IoQmilYTlNPKOGg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jobToSave\": {\r\n        \"_id\": \"66f56ae57efc52e535ffbc4d\",\r\n        \"title\": \"Senior test\",\r\n        \"due\": \"2024-05-14\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/savedJobs/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"savedJobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savedJobs",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZjMzZmYmVhZDJiMzE4MDkwYTM0ZTAiLCJuYW1lIjoibHVjYXM1IiwiaWF0IjoxNzI5NTY1Mjk2fQ.lisJPXHZSQKHm2rk98WWlsenmFq2IoQmilYTlNPKOGg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jobId\": \"66f56ae57efc52e535ffbc4d\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/savedJobs/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"savedJobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "appliedJobs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZjMzZmYmVhZDJiMzE4MDkwYTM0ZTAiLCJuYW1lIjoibHVjYXM1IiwiaWF0IjoxNzI5NTY1Mjk2fQ.lisJPXHZSQKHm2rk98WWlsenmFq2IoQmilYTlNPKOGg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/users/appliedJobs/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"appliedJobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "appliedJobs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZjMzZmYmVhZDJiMzE4MDkwYTM0ZTAiLCJuYW1lIjoibHVjYXM1IiwiaWF0IjoxNzI5NTY1Mjk2fQ.lisJPXHZSQKHm2rk98WWlsenmFq2IoQmilYTlNPKOGg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jobToApply\": {\r\n        \"_id\": \"66fa8bdd80ee00d74f4a3846\",\r\n        \"title\": \"Senior Ruby on rails\",\r\n        \"due\": \"2024-05-14\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/appliedJobs/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"appliedJobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "appliedJobs",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZjMzZmYmVhZDJiMzE4MDkwYTM0ZTAiLCJuYW1lIjoibHVjYXM1IiwiaWF0IjoxNzI5NTY1Mjk2fQ.lisJPXHZSQKHm2rk98WWlsenmFq2IoQmilYTlNPKOGg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jobId\": \"66fa8bdd80ee00d74f4a3845\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/appliedJobs/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"appliedJobs",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
