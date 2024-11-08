@@ -227,12 +227,6 @@ exports.addUserSkill = async (req) => {
 };
 
 exports.removeUserSkill = async (req) => {
-  // val userId
-  if (!isValidId(req.user._id)) {
-    const error = new Error("Invalid userId");
-    error.statusCode = 500;
-    throw error;
-  }
   // val skillId
   const { skillId } = req.body;
   if (!isValidId(skillId)) {
@@ -413,15 +407,7 @@ exports.getSavedJobs = async (req) => {
 
 exports.saveJob = async (req) => {
   try {
-    const userId = req.user._id;
     const { jobToSave } = req.body;
-
-    // val userId
-    if (!isValidId(userId)) {
-      const error = new Error("Invalid userId");
-      error.statusCode = 400;
-      throw error;
-    }
     // val jobId
     if (!isValidId(jobToSave._id)) {
       const error = new Error("Invalid jobId");
@@ -440,7 +426,7 @@ exports.saveJob = async (req) => {
     }
 
     const user = await User.findByIdAndUpdate(
-      userId,
+      req.user._id,
       // { $addToSet: { savedJobs: jobToSave } },
       {
         $addToSet: {
@@ -468,15 +454,7 @@ exports.saveJob = async (req) => {
 
 exports.unsaveJob = async (req) => {
   try {
-    const userId = req.user._id;
     const { jobId } = req.body;
-
-    // val userId
-    if (!isValidId(userId)) {
-      const error = new Error("Invalid userId");
-      error.statusCode = 500;
-      throw error;
-    }
     // val jobId
     if (!isValidId(jobId)) {
       const error = new Error("Invalid jobId");
@@ -485,7 +463,7 @@ exports.unsaveJob = async (req) => {
     }
 
     const user = await User.findByIdAndUpdate(
-      userId,
+      req.user._id,
       // { $pull: { skills: skillId } },
       { $pull: { savedJobs: { _id: jobId } } },
       { new: true }
@@ -505,15 +483,7 @@ exports.unsaveJob = async (req) => {
 // APPLIED-JOBS
 exports.getAppliedJobs = async (req) => {
   try {
-    const userId = req.user._id;
-    // val userId
-    if (!isValidId(userId)) {
-      const error = new Error("Invalid userId");
-      error.statusCode = 500;
-      throw error;
-    }
-
-    const user = await User.findById(userId).select("appliedJobs");
+    const user = await User.findById(req.user._id).select("appliedJobs");
 
     // err: user not found      
     if (!user) {
@@ -530,15 +500,7 @@ exports.getAppliedJobs = async (req) => {
 
 exports.applyJob = async (req) => {
   try {
-    const userId = req.user._id;
     const { jobToApply } = req.body;
-
-    // val userId
-    if (!isValidId(userId)) {
-      const error = new Error("Invalid userId");
-      error.statusCode = 500;
-      throw error;
-    }
     // val jobId
     if (!isValidId(jobToApply._id)) {
       const error = new Error("Invalid jobId");
@@ -547,7 +509,7 @@ exports.applyJob = async (req) => {
     }
 
     const user = await User.findByIdAndUpdate(
-      userId,
+      req.user._id,
       { $addToSet: { appliedJobs: jobToApply } },
       { new: true }
     ).select("appliedJobs");
@@ -566,15 +528,7 @@ exports.applyJob = async (req) => {
 
 exports.withdrawApp = async (req) => {
   try {
-    const userId = req.user._id;
     const { jobId } = req.body;
-
-    // val userId
-    if (!isValidId(userId)) {
-      const error = new Error("Invalid userId");
-      error.statusCode = 500;
-      throw error;
-    }
     // val jobId
     if (!isValidId(jobId)) {
       const error = new Error("Invalid jobId");
@@ -583,7 +537,7 @@ exports.withdrawApp = async (req) => {
     }
 
     const user = await User.findByIdAndUpdate(
-      userId,
+      req.user._id,
       // { $pull: { skills: skillId } },
       { $pull: { appliedJobs: { _id: jobId } } },
       { new: true }
