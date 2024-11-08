@@ -90,7 +90,7 @@ exports.authUser = async (req) => {
     // 1. validate req.body
     const { error } = authUser(req.body);
     if (error) {
-      const validationError = new Error(JSON.stringify(err.details));
+      const validationError = new Error(JSON.stringify(error.details));
       validationError.statusCode = 400;
       throw validationError;
     } 
@@ -124,17 +124,6 @@ exports.authUser = async (req) => {
 }
 
 exports.updateUser = async (req) => {
-  // 1. validate req.body
-  const { error } = validateUser(req.body);
-  if (error) throw new Error(JSON.stringify(err.details));
-  // 2. find user
-  // val userId
-  if (!isValidId(req.user._id)) {
-    const error = new Error("Invalid userId");
-    error.statusCode = 500;
-    throw error;
-  }
-  // 3. update the user
   try {
     const updateFields = {};
     if (req.body.name) updateFields.name = req.body.name;
@@ -295,9 +284,6 @@ exports.addUserExp = async (req) => {
   console.group(experience);
 
   const { error } = validateExp(experience);
-  console.log("@@@@@@@@@");
-  console.log(error);
-  console.log("@@@@@@@@@");
   if ( error ) throw new Error(JSON.stringify(error.details));
 
   // add skill
@@ -410,15 +396,7 @@ exports.removeUserEdu = async (req) => {
 // SAVED-JOBS
 exports.getSavedJobs = async (req) => {
   try {
-    const userId = req.user._id;
-    // val userId
-    if (!isValidId(userId)) {
-      const error = new Error("Invalid userId");
-      error.statusCode = 500;
-      throw error;
-    }
-
-    const user = await User.findById(userId).select("savedJobs");
+    const user = await User.findById(req.user._id).select("savedJobs");
 
     // err: user not found      
     if (!user) {
