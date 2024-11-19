@@ -87,7 +87,8 @@ exports.createUser = async (req) => {
     }
 
     // Send user to Auth Service and get jwt  
-    const response = await axios.post('http://localhost:3010/api/account', userSend2AccSer);
+    // const response = await axios.post('http://localhost:3010/api/account', userSend2AccSer);
+    const response = await axios.post(process.env.AUTH_SERVICE_NEW_ACCOUNT, userSend2AccSer);
     console.log("!!!!!!!!!!!!");
     const token = response.headers['authorization']; 
     const responseBody = response.data;
