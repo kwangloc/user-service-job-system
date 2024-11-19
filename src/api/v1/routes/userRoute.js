@@ -5,7 +5,7 @@ const auth = require('../middlewares/authentication')
 const admin = require('../middlewares/admin');
 
 // Testing route
-// router.post('/test_1', userController.test_1);
+router.post('/test_1', auth, userController.test_1);
 // router.post('/test_2', userController.test_2);
 
 // Public routes
@@ -19,13 +19,13 @@ router.post('/auth', userController.authUser);
 router.get('/profile/:userId', userController.getUser);
 // Protected
 router.put('/profile', auth, userController.updateUser);
-router.get('/a/profile/all', [auth, admin], userController.getAllUsers);
-router.delete('/a/profile/:userId', [auth, admin], userController.deleteUser);
+router.get('/admin/profile/all', [auth, admin], userController.getAllUsers);
+router.delete('/admin/profile/:userId', [auth, admin], userController.deleteUser);
 
 // # Skills
-// Protected
-router.get('/skills/:userId', auth, userController.getUserSkills);
-router.post('/skills', auth, userController.addUserSkill);
+router.get('/skills/:userId', userController.getUserSkills);
+router.post('/skill', auth, userController.addSingleSkill);
+router.post('/skills', auth, userController.addArraySkill);
 router.delete('/skills/', auth, userController.removeUserSkill);
 
 // Experiences

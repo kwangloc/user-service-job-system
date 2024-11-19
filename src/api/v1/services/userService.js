@@ -1,6 +1,7 @@
 const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
 //
 const bcrypt = require('bcrypt'); // hashing
+const axios = require('axios');
 
 const { User, validateUser, validateSkill, validateExp, validateEdu } = require("../models/userModel");
 const { isValidId, authUser } = require("../validations/validators");
@@ -75,74 +76,89 @@ exports.createUser = async (req) => {
       password: hashedPassword
     });
     const savedUser = await newUser.save();
-    const userWithoutPassword = savedUser.toObject();
-    delete userWithoutPassword.password;
-    return userWithoutPassword;
-    // const user = await User.create(req.body);
-    // return user;
+
+    const userSend2AccSer = {
+      userId: savedUser._id ,
+      email: savedUser.email ,
+      password: savedUser.password ,
+      name: savedUser.name ,
+      role: "candidate",
+      createdBy: "UserService"
+    }
+
+    // Send user to Auth Service and get jwt  
+    const response = await axios.post('http://localhost:3010/api/account', userSend2AccSer);
+    console.log("!!!!!!!!!!!!");
+    const token = response.headers['authorization']; 
+    const responseBody = response.data;
+    console.log("token: ", token);
+    console.log("res.body: ", responseBody);
+    console.log("JWT Token:", token);
+
+    return {
+      token,
+      message: responseBody.message,
+      // account: responseBody.account
+      user: {
+        _id: savedUser._id,
+        name: savedUser.name,
+        email: savedUser.email,
+        role: "candidate" 
+      }
+    };
+    
   } catch (err) {
     throw new Error(`Failed to create user: ${err.message}`);
   }
 };
 
-exports.authUser = async (req) => {
-  try {
-    // 1. validate req.body
-    const { error } = authUser(req.body);
-    if (error) {
-      const validationError = new Error(JSON.stringify(error.details));
-      validationError.statusCode = 400;
-      throw validationError;
-    } 
-    // 2. verify email
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      const err = new Error("Invalid email or password");
-      err.statusCode = 401;
-      throw err;
-    }
-    // 3. verify password
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) {
-      const err = new Error("Invalid email or password");
-      err.statusCode = 401;
-      throw err;
-    }
-    const token = user.generateAuthToken();
-    // return token;
-    return {
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email
-      }
-    };
-  } catch (err) {
-    throw new Error(`Authentication failed! ${err.message}`);
-  }
-}
-
 exports.updateUser = async (req) => {
   try {
+    
     const updateFields = {};
-    if (req.body.name) updateFields.name = req.body.name;
-    if (req.body.location) updateFields.location = req.body.location;
-    if (req.body.phone) updateFields.phone = req.body.phone;
-    if (req.body.dateOfBirth) updateFields.dateOfBirth = req.body.dateOfBirth;
+    const updateKeys = ["name", , "location", "gender", "phone", "dateOfBirth"];
+    // if (req.body.name) updateFields.name = req.body.name;
+    // if (req.body.location) updateFields.location = req.body.location;
+    // if (req.body.gender) updateFields.gender = req.body.gender;
+    // if (req.body.phone) updateFields.phone = req.body.phone;
+    // if (req.body.dateOfBirth) updateFields.dateOfBirth = req.body.dateOfBirth;
+    updateKeys.forEach((key) => {
+      if (req.body[key]) {
+        updateFields[key] = req.body[key];
+      }
+    });
 
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      updateFields.password = hashedPassword;
+    } 
+
+    // find and update
     const user = await User.findByIdAndUpdate(
       req.user._id,
       { $set: updateFields },
       { new: true }
     ).select('-password');
-
-    // err: user not found
     if (!user) {
       const error = new Error("User not found");
       error.statusCode = 404;
       throw error;
     }
+    // rabbitmq
+    if (updateFields.hasOwnProperty("name") || updateFields.hasOwnProperty("password")) {
+      const userToPublish = {userId: req.user._id};
+      const keysToPublish = ["name", , "password"];
+
+      keysToPublish.forEach((key) => {
+        if (updateFields.hasOwnProperty(key)) {
+          userToPublish[key] = updateFields[key]
+        }
+      });
+      await publishEvent('user.account.updated', userToPublish);  
+    }
+
+    // response
     return user;
   } catch (err) {
     throw new Error(`Failed to update user: ${err.message}`);
@@ -158,18 +174,20 @@ exports.deleteUser = async (req) => {
     throw error;
   }
 
+  let result = await User.findByIdAndDelete(userId);
   try {
-    let result = await User.findByIdAndDelete(userId);
-    // if (!res) return res.status(404).send("The user id is invalid!");
     if (!result) {
       const error = new Error("User not found");
       error.statusCode = 404;
       throw error;
     }
-    return result;
+    // rabbitmq
+    const userToPublish = {userId: userId};
+    await publishEvent('user.account.deleted', userToPublish);  
   } catch (err) {
     throw new Error(`Failed to delete user: ${err.message}`);
   }
+  return result;
 };
 
 // SKILLS
@@ -195,21 +213,15 @@ exports.getUserSkills = async (req) => {
   }
 };
 
-exports.addUserSkill = async (req) => {
+exports.addSingleSkill = async (req) => {
   // val skill object
-  const { error } = validateSkill(req.body);
-  if (error) throw new Error(JSON.stringify(error.details));
-
   const { skill } = req.body;
-  // if (!validateSkill(skill)) {
-  //   const error = new Error("Missing required fields");
-  //   error.statusCode = 500;
-  //   throw error;
-  // }
+  const { error } = validateSkill(skill);
+  if (error) throw new Error(JSON.stringify(error.details));
 
   if (!isValidId(skill._id)) {
     const error = new Error("Invalid skillId");
-    error.statusCode = 500;
+    error.statusCode = 404;
     throw error;
   }
  
@@ -218,6 +230,43 @@ exports.addUserSkill = async (req) => {
     const user = await User.findByIdAndUpdate(
       req.user._id,
       { $addToSet: { skills: skill } },
+      { new: true }
+    ).select("skills");
+    return user.skills;
+  } catch (err) {
+    throw new Error(`Failed to addUserSkill: ${err.message}`);
+  }
+};
+
+exports.addArraySkill = async (req) => {
+  // val skill object
+  const { skills } = req.body;
+  if (!Array.isArray(skills)) {
+    const error = new Error("Skills should be an array");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  for (const skill of skills) {
+    const { error } = validateSkill(skill);
+    if (error) {
+      const validationError = new Error(JSON.stringify(error.details));
+      validationError.statusCode = 400;
+      throw validationError;
+    }
+
+    if (!isValidId(skill._id)) {
+      const error = new Error("Invalid skillId");
+      error.statusCode = 404;
+      throw error;
+    }
+  }
+
+  // add skill
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $addToSet: { skills: { $each: skills } } },
       { new: true }
     ).select("skills");
     return user.skills;

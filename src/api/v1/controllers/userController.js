@@ -1,8 +1,9 @@
 const userService = require('../services/userService');
+const { publishEvent, formatNewUserMsg } = require('../../../rabbitmq/rabbitmqPublisher');
 
 exports.test_1 = async (req, res, next) => {
   try {
-    const result = await userService.test_1(req);
+    const result = await userService.addUserSkill2(req);
     console.log(typeof result);
     res.status(200).json(result);
   } catch (err) {
@@ -40,9 +41,23 @@ exports.getUser = async (req, res, next) => {
 
 exports.createUser = async (req, res, next) => {
   try {
-    const user = await userService.createUser(req);
-    // console.log(typeof user);
-    res.status(201).json(user);
+    // const user = await userService.createUser(req);
+    // if (user) {
+    //   const newUser = await formatNewUserMsg(user, 'candidate');
+    //   await publishEvent('user.account.created', newUser);  
+    // }
+    // res.status(201).json(user);
+
+    const result = await userService.createUser(req);
+    res.setHeader('Authorization', result.token);
+    // res.status(201).json({
+    //   message: 'Authentication successful',
+    //   user: result.user
+    // });
+    res.status(201).json({
+      message: result.message,
+      user: result.user
+    });
   } catch (err) {
     next(err);
   }
@@ -91,9 +106,18 @@ exports.getUserSkills = async (req, res, next) => {
   }
 };
 
-exports.addUserSkill = async (req, res, next) => {
+exports.addSingleSkill = async (req, res, next) => {
   try {
-    const skills = await userService.addUserSkill(req);
+    const skills = await userService.addSingleSkill(req);
+    res.status(200).json(skills);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.addArraySkill = async (req, res, next) => {
+  try {
+    const skills = await userService.addArraySkill(req);
     res.status(200).json(skills);
   } catch (err) {
     next(err);

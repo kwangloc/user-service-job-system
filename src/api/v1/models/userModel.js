@@ -81,6 +81,12 @@ const userSchema = mongoose.Schema({
         minlength: 6,
         maxlengh: 1024 // hash password
     },
+    gender: {
+        type: String,
+        enum: ["male", "female", "prefer not to say"],
+        default: "male",  
+        required: true
+    },
     phone: {
         type: String,
         default: ''
