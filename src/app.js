@@ -9,7 +9,13 @@ require('./api/v1/startup/logging.js')(logger); // Logging
 
 // Middlewares
 const app = express();
-app.use(cors()); 
+// app.use(cors()); 
+app.use(cors({
+    origin: '*', // Hoặc liệt kê cụ thể các domain: ['https://frontend.com', 'https://mobileapp.com']
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Headers được phép gửi
+    exposedHeaders: ['Authorization', 'X-Custom-Header', 'X-Total-Count'] // Headers cho phép frontend đọc
+}));
 
 // RabbitMQ
 const { setupRabbitMQ } = require('./rabbitmq/rabbitmqSetup');
