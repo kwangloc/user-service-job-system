@@ -343,6 +343,45 @@ exports.addUserExp = async (req) => {
   }
 };
 
+exports.updateUserExp = async (req) => {
+  // Input data
+  const { expId } = req.params;
+  const { experience } = req.body;
+
+  // Validating
+  if (!isValidId(expId)) {
+    const error = new Error("Invalid expId");
+    error.statusCode = 500;
+    throw error;
+  }
+
+  const { error } = validateExp(experience);
+  if ( error ) throw new Error(JSON.stringify(error.details));
+
+  const updateFields = {};
+  const updateKeys = ["company", "position", "duration", "description"];
+  updateKeys.forEach((key) => {
+    if (experience[key]) {
+      updateFields[`experience.$.${key}`] = experience[key];
+    }
+  });
+
+   // Update the user's experience
+   console.log("@@@@@@@", req.user._id)
+   const result = await User.updateOne(
+    { _id: req.user._id, "experience._id": expId }, // Find the specific experience by ID
+    { $set: updateFields } // Apply the dynamic updates
+  );
+
+  if (result.modifiedCount === 0) {
+    return { success: false, message: "Experience not found or no changes made" };
+  }
+
+  const updatedExp = User.findById(req.user._id).select("experience");
+  
+  return updatedExp;
+};
+
 exports.removeUserExp = async (req) => {
   // val expId
   const { expId } = req.body;
@@ -362,7 +401,8 @@ exports.removeUserExp = async (req) => {
       { $pull: { experience: { _id: expId } } },
       { new: true }
     ).select("experience");
-    return user.skills;
+
+    return user;
   } catch (err) {
     throw new Error(`Failed to removeUserExp: ${err.message}`);
   }
@@ -412,6 +452,45 @@ exports.addUserEdu = async (req) => {
   }
 };
 
+exports.updateUserEdu = async (req) => {
+  // Input data
+  const { eduId } = req.params;
+  const { education } = req.body;
+
+  // Validating
+  if (!isValidId(eduId)) {
+    const error = new Error("Invalid eduId");
+    error.statusCode = 500;
+    throw error;
+  }
+
+  const { error } = validateEdu(education);
+  if ( error ) throw new Error(JSON.stringify(error.details));
+
+  const updateFields = {};
+  const updateKeys = ["school", "major", "duration", "description"];
+  updateKeys.forEach((key) => {
+    if (education[key]) {
+      updateFields[`education.$.${key}`] = education[key];
+    }
+  });
+
+   // Update the user's education
+   console.log("@@@@@@@", req.user._id)
+   const result = await User.updateOne(
+    { _id: req.user._id, "education._id": eduId }, // Find the specific education by ID
+    { $set: updateFields } // Apply the dynamic updates
+  );
+
+  if (result.modifiedCount === 0) {
+    return { success: false, message: "Education not found or no changes made" };
+  }
+
+  const updatedEdu = User.findById(req.user._id).select("education");
+  
+  return updatedEdu;
+};
+
 exports.removeUserEdu = async (req) => {
   // val expId
   const { eduId } = req.body;
@@ -431,7 +510,7 @@ exports.removeUserEdu = async (req) => {
       { $pull: { education: { _id: eduId } } },
       { new: true }
     ).select("education");
-    return user.skills;
+    return user;
   } catch (err) {
     throw new Error(`Failed to removeUserExp: ${err.message}`);
   }
@@ -496,7 +575,7 @@ exports.saveJob = async (req) => {
       throw error;
     }
 
-    return user.savedJobs;
+    return user;
   } catch (error) {
     throw new Error(`Failed to saveJob: ${error.message}`);
   }
@@ -524,7 +603,7 @@ exports.unsaveJob = async (req) => {
       error.statusCode = 404;
       throw error;
     }
-    return user.savedJobs;
+    return user;
   } catch (err) {
     throw new Error(`Failed to unsaveJob: ${err.message}`);
   }
@@ -542,7 +621,7 @@ exports.getAppliedJobs = async (req) => {
       throw error;
     }
 
-    return user.savedJobs;
+    return user;
   } catch (error) {
     throw new Error(`Failed to getAppliedJobs: ${error.message}`);
   }
@@ -570,7 +649,7 @@ exports.applyJob = async (req) => {
       throw error;
     }
 
-    return user.appliedJobs;
+    return user;
   } catch (error) {
     throw new Error(`Failed to applyJob: ${error.message}`);
   }
@@ -600,7 +679,7 @@ exports.withdrawApp = async (req) => {
       throw error;
     }
 
-    return user.appliedJobs;
+    return user;
   } catch (err) {
     throw new Error(`Failed to withdrawApp: ${err.message}`);
   }

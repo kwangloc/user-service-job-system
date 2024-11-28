@@ -31,15 +31,14 @@ router.delete('/skills/', auth, userController.removeUserSkill);
 // Experiences
 router.get('/exp/:userId', userController.getUserExp);
 router.post('/exp', auth, userController.addUserExp);
-// router.put('/exp/:expId', userController.updateUserExp);
+router.put('/exp/:expId', auth, userController.updateUserExp);
 router.delete('/exp/', auth, userController.removeUserExp);
 
 // Education
 router.get('/edu/:userId', userController.getUserEdu);
 router.post('/edu', auth, userController.addUserEdu);
-// router.put('/education/:educationId', userController.updateUserEducation);
+router.put('/edu/:eduId', auth, userController.updateUserEdu);
 router.delete('/edu/', auth, userController.removeUserEdu);
-
 
 // Saved-jobs
 router.get('/savedJobs/', auth, userController.getSavedJobs);

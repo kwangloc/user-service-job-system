@@ -6,8 +6,10 @@ const cors = require('cors');
 
 const logger = require('./api/v1/middlewares/logger');
 require('./api/v1/startup/logging.js')(logger); // Logging
+
+// Middlewares
 const app = express();
-app.use(cors()); // cho phép tất cả các nguồn gốc
+app.use(cors()); 
 
 // RabbitMQ
 const { setupRabbitMQ } = require('./rabbitmq/rabbitmqSetup');

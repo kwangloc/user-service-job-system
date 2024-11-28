@@ -152,6 +152,15 @@ exports.addUserExp = async (req, res, next) => {
   }
 };
 
+exports.updateUserExp = async (req, res, next) => {
+  try {
+    const exp = await userService.updateUserExp(req);
+    res.status(200).json(exp);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.removeUserExp = async (req, res, next) => {
   try {
     const exp = await userService.removeUserExp(req);
@@ -179,6 +188,16 @@ exports.addUserEdu = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.updateUserEdu = async (req, res, next) => {
+  try {
+    const edu = await userService.updateUserEdu(req);
+    res.status(200).json(edu);
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 exports.removeUserEdu = async (req, res, next) => {
   try {
