@@ -5,6 +5,10 @@ const auth = require('../middlewares/authentication')
 const admin = require('../middlewares/admin');
 
 // Testing route
+router.get("/health", async (req, res) => {
+    res.send({ message: "health OK!" });
+});
+
 router.post('/test_1', auth, userController.test_1);
 // router.post('/test_2', userController.test_2);
 
@@ -15,7 +19,7 @@ router.post('/test_1', auth, userController.test_1);
 // # Profile
 // Public
 router.post('/register', userController.createUser);
-router.post('/auth', userController.authUser);
+// router.post('/auth', userController.authUser);
 router.get('/profile/:userId', userController.getUser);
 // Protected
 router.put('/profile', auth, userController.updateUser);
