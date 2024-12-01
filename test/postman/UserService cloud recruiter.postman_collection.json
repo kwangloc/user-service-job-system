@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "fdefae27-47f0-4125-ba63-c69ea58292f0",
+		"name": "UserService cloud recruiter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37965156"
+	},
+	"item": [
+		{
+			"name": "health",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"skills\": [\r\n    {\r\n      \"_id\": \"60d0fe4f5311236168a109ca\",\r\n      \"title\": \"JavaScript\"\r\n    },\r\n    {\r\n      \"_id\": \"60d0fe4f5311236168a109cb\",\r\n      \"title\": \"Python\"\r\n    },\r\n    {\r\n      \"_id\": \"60d0fe4f5311236168a109cc\",\r\n      \"title\": \"Java\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/recruiter/test_1",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"recruiter",
+						"test_1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new profile recruiter",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"recruiter3\",\r\n    \"email\": \"recruiter3@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/recruiter/register",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"recruiter",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all recruiters",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhMDY2Mjg0NDc5NDdiNWMyMjY0ZWMiLCJ1c2VySWQiOiI2NzJhMDMzYTJkY2YzYjFhNzMxZGRmMzYiLCJlbWFpbCI6Imx1Y2FzM0BnbWFpbC5jb20iLCJuYW1lIjoiTHVjYXMgRmlnbyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDgwNzQ1M30.wQGqkJifVhRISVvJYz5b4ZcTBPCyTjQGi8izEwgAFkg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/recruiter/admin/profile/all",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"recruiter",
+						"admin",
+						"profile",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1 recruiter",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhMDY2Mjg0NDc5NDdiNWMyMjY0ZWMiLCJ1c2VySWQiOiI2NzJhMDMzYTJkY2YzYjFhNzMxZGRmMzYiLCJlbWFpbCI6Imx1Y2FzM0BnbWFpbC5jb20iLCJuYW1lIjoiTHVjYXMgRmlnbyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDgwNzQ1M30.wQGqkJifVhRISVvJYz5b4ZcTBPCyTjQGi8izEwgAFkg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/recruiter/profile/674c1c87a554b13705359ec1",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"recruiter",
+						"profile",
+						"674c1c87a554b13705359ec1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recruiter",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzRjMWM4N2E1NTRiMTM3MDUzNTllYzEiLCJlbWFpbCI6InJlY3J1aXRlcjNAZ21haWwuY29tIiwicm9sZSI6InJlY3J1aXRlciIsImlhdCI6MTczMzA0MTM0NH0.TMg_ItxpZPbWxq3BGFZuClKW3l3CiHGCUtYFlQdv0qM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"recruiter test 3\",\r\n    \"gender\": \"male\",\r\n    \"phone\": \"0123456789\",\r\n    \"dateOfBirth\": \"2024-11-06\",\r\n    \"password\": \"123456789\",\r\n    \"asd\": \"asd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/recruiter/profile",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"recruiter",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recruiter",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhMDY2Mjg0NDc5NDdiNWMyMjY0ZWMiLCJ1c2VySWQiOiI2NzJhMDMzYTJkY2YzYjFhNzMxZGRmMzYiLCJlbWFpbCI6Imx1Y2FzM0BnbWFpbC5jb20iLCJuYW1lIjoiTHVjYXMgRmlnbyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDgwNzQ1M30.wQGqkJifVhRISVvJYz5b4ZcTBPCyTjQGi8izEwgAFkg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/recruiter/admin/profile/674c1c87a554b13705359ec1",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"recruiter",
+						"admin",
+						"profile",
+						"674c1c87a554b13705359ec1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postedJobs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzRhZmYzYWFlYjNlMzY1ZTA4NDMzMGEiLCJlbWFpbCI6InJlY3J1aXRlcjFAZ21haWwuY29tIiwicm9sZSI6InJlY3J1aXRlciIsImlhdCI6MTczMzA0MDA4Nn0.wCI_-sbY1ArRWls7Hz5-o7p2-msmF3zAVTbp8zTZVEk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jobToSave\": {\r\n        \"_id\": \"66f56ae57efc52e535ffbc4e\",\r\n        \"title\": \"Freshser test\",\r\n        \"due\": \"2024-05-14\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/recruiter/postedJobs/",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"recruiter",
+						"postedJobs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postedJobs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzRhZmYzYWFlYjNlMzY1ZTA4NDMzMGEiLCJlbWFpbCI6InJlY3J1aXRlcjFAZ21haWwuY29tIiwicm9sZSI6InJlY3J1aXRlciIsImlhdCI6MTczMzA0MDA4Nn0.wCI_-sbY1ArRWls7Hz5-o7p2-msmF3zAVTbp8zTZVEk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/recruiter/postedJobs/",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"recruiter",
+						"postedJobs",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postedJobs",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzRhZmYzYWFlYjNlMzY1ZTA4NDMzMGEiLCJlbWFpbCI6InJlY3J1aXRlcjFAZ21haWwuY29tIiwicm9sZSI6InJlY3J1aXRlciIsImlhdCI6MTczMzA0MDA4Nn0.wCI_-sbY1ArRWls7Hz5-o7p2-msmF3zAVTbp8zTZVEk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jobId\": \"66f56ae57efc52e535ffbc4e\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/recruiter/postedJobs/",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"recruiter",
+						"postedJobs",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

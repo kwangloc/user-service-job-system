@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "f3f685b0-c924-4756-827c-d0676f6437cc",
-		"name": "User service",
+		"_postman_id": "bd4a6262-2218-4a44-ae4c-42760d3c4edf",
+		"name": "UserService cloud candidate",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "37965156"
 	},
@@ -57,29 +57,31 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3009/api/users/test_2",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/health",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3009",
 					"path": [
-						"api",
-						"users",
-						"test_2"
+						"health"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "auth",
+			"name": "health",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"lucas1@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+					"raw": "{\r\n    \"_id\": \"abc123\",\r\n    \"title\": \"Hiring senior python developer\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -87,16 +89,17 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/auth",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/user/health",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
-						"users",
-						"auth"
+						"user",
+						"health"
 					]
 				}
 			},
@@ -109,21 +112,22 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZkNThkNDU0ZTg3ZjUwNjBhOWFiZTAiLCJuYW1lIjoiYWJjIiwiaWF0IjoxNzI5NDY0MjQ2fQ.V5IdwKC4iD8_dGRfmqiknCUH3OcuqY-H8oQTU82TJMU",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhMDY2Mjg0NDc5NDdiNWMyMjY0ZWMiLCJ1c2VySWQiOiI2NzJhMDMzYTJkY2YzYjFhNzMxZGRmMzYiLCJlbWFpbCI6Imx1Y2FzM0BnbWFpbC5jb20iLCJuYW1lIjoiTHVjYXMgRmlnbyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDgwNzQ1M30.wQGqkJifVhRISVvJYz5b4ZcTBPCyTjQGi8izEwgAFkg",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/api/users/a/profile/all",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/user/admin/profile/all",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
-						"users",
-						"a",
+						"user",
+						"admin",
 						"profile",
 						"all"
 					]
@@ -137,17 +141,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/users/profile/672ae047d7249349356e090f",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/profile/673b70739ac5d0604f623acd",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
 						"profile",
-						"672ae047d7249349356e090f"
+						"673b70739ac5d0604f623acd"
 					]
 				}
 			},
@@ -160,7 +165,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test2\",\r\n    \"email\": \"test2@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+					"raw": "{\r\n    \"name\": \"admin2\",\r\n    \"email\": \"admin2@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -168,15 +173,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/register",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/user/register",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
-						"users",
+						"user",
 						"register"
 					]
 				}
@@ -190,7 +196,7 @@
 				"header": [
 					{
 						"key": "authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzM2OTY4ZTM2OWJlMjY5NDVlZDNmZmQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzE5NDY1NzV9.mN9rLHB4PUndOsJ3f73zl-o1d0c42y82IYm6pDBbt_M",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -204,48 +210,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/profile",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/profile",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
-					"path": [
-						"api",
-						"users",
-						"profile"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "test authorization",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZjMzZmYmVhZDJiMzE4MDkwYTM0ZTAiLCJuYW1lIjoibHVjYXM1IiwiaWF0IjoxNzI5NDU2NDk4fQ.WirvbshE6v9wk5HOlud1Wr2vP1Mi5pRFne2_cuQtCMw",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"_id\": \"66fc35c657aa0e85d3ddc240\",\r\n    \"name\": \"lucas5\",\r\n    \"location\": \"Hanoi\",\r\n    \"asd\": \"asd\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3000/api/users/profile",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -276,12 +247,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/admin/profile/673b7119ee0952ad11293211",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/admin/profile/673b7119ee0952ad11293211",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -300,7 +272,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -314,12 +286,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/skill",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/skill",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -336,7 +309,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -350,12 +323,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/skills",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/skills",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -371,12 +345,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/users/skills/673b70739ac5d0604f623acd",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/skills/673b70739ac5d0604f623acd",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -394,7 +369,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -408,12 +383,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/skills/",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/skills/",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -427,33 +403,11 @@
 		{
 			"name": "exp",
 			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/users/exp/6736968e369be26945ed3ffd",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"users",
-						"exp",
-						"6736968e369be26945ed3ffd"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "exp",
-			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -467,16 +421,85 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/exp",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/user/exp",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
-						"users",
+						"user",
 						"exp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "exp",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/user/exp/673b70739ac5d0604f623acd",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"exp",
+						"673b70739ac5d0604f623acd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "exp",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"experience\": {\r\n        \"company\": \"FPT\",\r\n        \"position\": \"Backend developer intern\",\r\n        \"description\": \"Developed client's side UI\",\r\n        \"duration\": \"2020-2025\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/user/exp/673ca1335ec5fba8503eccfa",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"exp",
+						"673ca1335ec5fba8503eccfa"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -503,15 +526,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/exp/",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/user/exp/",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
-						"users",
+						"user",
 						"exp",
 						""
 					]
@@ -526,13 +550,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"education\": {\r\n        \"school\": \"DUT\",\r\n        \"major\": \"Computer Science\",\r\n        \"duration\": \"2021-2025\",\r\n        \"description\": \"Concentrate on NN and ML\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"education\": {\r\n        \"school\": \"UIT\",\r\n        \"major\": \"Computer Science\",\r\n        \"duration\": \"2021-2025\",\r\n        \"description\": \"Concentrate on NN and ML\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -540,15 +564,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/edu",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/user/edu",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
-						"users",
+						"user",
 						"edu"
 					]
 				}
@@ -561,17 +586,63 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/users/edu/6736968e369be26945ed3ffd",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/user/edu/673b70739ac5d0604f623acd",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
-						"users",
+						"user",
 						"edu",
-						"6736968e369be26945ed3ffd"
+						"673b70739ac5d0604f623acd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edu",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"education\": {\r\n        \"school\": \"FPT\",\r\n        \"major\": \"Computer Science\",\r\n        \"duration\": \"2021-2025\",\r\n        \"description\": \"Concentrate on NN and ML\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://user-service-job-system.onrender.com/api/user/edu/67483960ae6a959fec2b424a",
+					"protocol": "https",
+					"host": [
+						"user-service-job-system",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"edu",
+						"67483960ae6a959fec2b424a"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -584,7 +655,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -598,15 +669,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/edu/",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/user/edu/",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
-						"users",
+						"user",
 						"edu",
 						""
 					]
@@ -621,7 +693,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -635,12 +707,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/savedJobs/",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/savedJobs/",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -661,7 +734,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJhZTA0N2Q3MjQ5MzQ5MzU2ZTA5MGYiLCJuYW1lIjoibHVjYXMxIiwiaWF0IjoxNzMwODYzMjE2fQ.0QqW3f44fipy-4ZYE_S0UbLnT0ODdo01G1_RWr8NqNo",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -675,17 +748,24 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/savedJobs/",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/savedJobs/?",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
 						"savedJobs",
 						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
 					]
 				}
 			},
@@ -698,7 +778,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -712,12 +792,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/savedJobs/",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/savedJobs/",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -735,17 +816,18 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZjMzZmYmVhZDJiMzE4MDkwYTM0ZTAiLCJuYW1lIjoibHVjYXM1IiwiaWF0IjoxNzI5NTY1Mjk2fQ.lisJPXHZSQKHm2rk98WWlsenmFq2IoQmilYTlNPKOGg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/api/users/appliedJobs/",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/appliedJobs/",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -763,7 +845,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -777,12 +859,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/appliedJobs/",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/appliedJobs/",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -800,7 +883,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMDgyMTN9.DkUYcXg-36ANXqk5psVny4orV4PfWkWqvl1qsRWjAhg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiNzA3MzlhYzVkMDYwNGY2MjNhY2QiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3MzIwMjY2NTF9.GiKzOu4151pYOYJMMjOLo-aiFtjTZ8j0ZcDSlbelPwo",
 						"type": "text"
 					}
 				],
@@ -814,12 +897,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/appliedJobs/",
-					"protocol": "http",
+					"raw": "https://user-service-job-system.onrender.com/api/users/appliedJobs/",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"user-service-job-system",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"users",
