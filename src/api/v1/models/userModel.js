@@ -96,7 +96,8 @@ const userSchema = mongoose.Schema({
         default: null
     },
     location: {
-        type: String
+        type: String,
+        default: ''
     },
     skills: {
         type: [skillSchema],
