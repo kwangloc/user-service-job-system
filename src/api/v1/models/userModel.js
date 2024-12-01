@@ -116,11 +116,11 @@ const userSchema = mongoose.Schema({
 });
 
 // gen jwt
-userSchema.methods.generateAuthToken = function() {
-    // const token = jwt.sign({_id: this._id, name: this.name, isAdmin: this.isAdmin}, config.get('jwtPrivateKey'));
-    const token = jwt.sign({_id: this._id, name: this.name, isAdmin: this.isAdmin}, process.env.JWT_PRIVATE_KEY);
-    return token;
-}
+// userSchema.methods.generateAuthToken = function() {
+//     // const token = jwt.sign({_id: this._id, name: this.name, isAdmin: this.isAdmin}, config.get('jwtPrivateKey'));
+//     const token = jwt.sign({_id: this._id, name: this.name, isAdmin: this.isAdmin}, process.env.JWT_PRIVATE_KEY);
+//     return token;
+// }
 
 // model
 const User = new mongoose.model('User', userSchema);
