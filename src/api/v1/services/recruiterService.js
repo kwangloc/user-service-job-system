@@ -63,13 +63,14 @@ exports.createRecruiter = async (req) => {
       ...req.body,
       password: hashedPassword
     });
-    const savedRecruiter = await newRecruiter.save();
+
+    console.log("newRecruiter:", newRecruiter);
 
     const recruiterSend2AuthSer = {
-      userId: savedRecruiter._id ,
-      email: savedRecruiter.email ,
-      password: savedRecruiter.password ,
-      name: savedRecruiter.name ,
+      userId: newRecruiter._id ,
+      email: newRecruiter.email ,
+      password: newRecruiter.password ,
+      name: newRecruiter.name ,
       role: "recruiter",
       createdBy: "UserService"
     }
@@ -84,6 +85,9 @@ exports.createRecruiter = async (req) => {
     console.log("res.body: ", responseBody);
     console.log("JWT Token:", token);
 
+    const savedRecruiter = await newRecruiter.save();
+    console.log("savedRecruiter:", savedRecruiter);
+
     return {
       token,
       message: responseBody.message,
@@ -97,6 +101,9 @@ exports.createRecruiter = async (req) => {
     };
     
   } catch (err) {
+    if (axios.isAxiosError(err)) {
+      throw new Error(`Failed to create recruiter, couldn't connect to AuthService!: ${err.message}`);
+    }
     throw new Error(`Failed to create recruiter: ${err.message}`);
   }
 };
