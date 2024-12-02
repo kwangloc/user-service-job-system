@@ -9,6 +9,7 @@ function auth(req, res, next) {
         // const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
         const decoded = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
         req.user = decoded;
+        console.log("*Got a request from, req.user:");
         console.log(req.user);
         next();
     } catch (error) {

@@ -15,7 +15,7 @@ async function consumeJobEvents() {
         await channel.bindQueue(queue, exchange, 'job.*');  
         await channel.bindQueue(queue, exchange, 'noti.*');  
 
-        console.log(`Waiting for messages in ${queue}`);
+        console.log(`*Waiting for messages in ${queue}`);
 
         // Consume messages from the queue
         channel.consume(queue, (msg) => {

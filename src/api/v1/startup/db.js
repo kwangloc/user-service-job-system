@@ -4,5 +4,5 @@ const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/user_serv
 
 module.exports = function() {
     mongoose.connect(mongoUri)
-        .then(() => logger.info('Connected to MongoDB...'))
+        .then(() => logger.info('*Connected to MongoDB...'))
 }
