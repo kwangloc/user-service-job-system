@@ -75,13 +75,14 @@ exports.createUser = async (req) => {
       ...req.body,
       password: hashedPassword
     });
-    const savedUser = await newUser.save();
+
+    console.log("newUser:", newUser);
 
     const userSend2AccSer = {
-      userId: savedUser._id ,
-      email: savedUser.email ,
-      password: savedUser.password ,
-      name: savedUser.name ,
+      userId: newUser._id ,
+      email: newUser.email ,
+      password: newUser.password ,
+      name: newUser.name ,
       role: "candidate",
       createdBy: "UserService"
     }
@@ -96,6 +97,9 @@ exports.createUser = async (req) => {
     console.log("res.body: ", responseBody);
     console.log("JWT Token:", token);
 
+    const savedUser = await newUser.save();
+    console.log("savedUser:", savedUser);
+
     return {
       token,
       message: responseBody.message,
@@ -109,13 +113,15 @@ exports.createUser = async (req) => {
     };
     
   } catch (err) {
-    throw new Error(`Failed to create user: ${err.message}`);
+    if (axios.isAxiosError(err)) {
+      throw new Error(`Failed to create user, couldn't connect to AuthService!: ${err.message}`);
+    }
+    throw new Error(`Failed to create user: ${err}`);
   }
 };
 
 exports.updateUser = async (req) => {
   try {
-    
     const updateFields = {};
     const updateKeys = ["name", , "location", "gender", "phone", "dateOfBirth"];
     // if (req.body.name) updateFields.name = req.body.name;
@@ -146,6 +152,7 @@ exports.updateUser = async (req) => {
       error.statusCode = 404;
       throw error;
     }
+    
     // rabbitmq
     if (updateFields.hasOwnProperty("name") || updateFields.hasOwnProperty("password")) {
       const userToPublish = {userId: req.user._id};
