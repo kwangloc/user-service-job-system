@@ -21,7 +21,7 @@ app.use(cors({
 const { setupRabbitMQ } = require('./rabbitmq/rabbitmqSetup');
 const { consumeJobEvents } = require('./rabbitmq/rabbitmqConsumer');
 
-require('./api/v1/startup/config.js')(); // Config
+// require('./api/v1/startup/config.js')(); // Config
 require('./api/v1/startup/routes.js')(app); // Add routes handlers
 require('./api/v1/startup/db.js')(); // Connect to DB
 
