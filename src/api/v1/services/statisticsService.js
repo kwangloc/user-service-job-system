@@ -40,37 +40,44 @@ exports.growth = async (req) => {
 
   return {
     // FOR USERS
-    totalUsers,
-    // usersCreatedThisMonth,
-    usersCreatedToday,
-    usersCreatedEachMonth,
-    // FOR RECRUITERS
-    totalRecruiters,
-    // recruitersCreatedThisMonth,
-    recruitersCreatedToday,
-    recruitersCreatedEachMonth
+    users: {
+      totalUsers,
+      // usersCreatedThisMonth,
+      usersCreatedToday,
+      usersCreatedEachMonth,
+    },
+    recruiters: {
+      // FOR RECRUITERS
+      totalRecruiters,
+      // recruitersCreatedThisMonth,
+      recruitersCreatedToday,
+      recruitersCreatedEachMonth
+    }
   };
 };
 
 exports.demographic = async (req) => {
-  const user = User.find().sort("-location");
-  const usersByLocation = await User.aggregate([
+  const result = await User.aggregate([
     {
       $group: {
-        _id: "$location.city",
-        count: { $sum: 1 }
+        _id: "$location", // Group by the 'location' field
+        count: { $sum: 1 } // Count the number of users in each location
       }
     },
     {
-      $sort: { count: -1 }
+      $sort: { count: -1 } // Optional: Sort by count in descending order
     }
   ]);
 
-  return usersByLocation;
+  // Format the result
+  return result.map(item => ({
+    location: item._id || "Unknown", // Handle empty or null locations
+    count: item.count
+  }));
 };
 
 exports.userTracking = async (req) => {
-  return Recruiter.find().sort("-name");
+  return User.find().sort("-name");
 };
 
 

@@ -152,7 +152,7 @@ exports.updateUser = async (req) => {
       error.statusCode = 404;
       throw error;
     }
-    
+
     // rabbitmq
     if (updateFields.hasOwnProperty("name") || updateFields.hasOwnProperty("password")) {
       const userToPublish = {userId: req.user._id};
