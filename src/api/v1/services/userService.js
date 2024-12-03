@@ -8,16 +8,20 @@ const { isValidId, authUser } = require("../validations/validators");
 
 // For testing
 exports.test_1 = async (req) => {
-  console.log("***********");
-  console.log("Got a request.");
-  console.log("Created user.");
-  const newUser = {
-    id: req.body._id,
-    name: req.body.name,
-    email: req.body.email
-  };
+  const msgContent = "testing msg";
+  publishEvent('testing.testing.testing', msgContent); 
+  console.log("Published")
+
+  // console.log("***********");
+  // console.log("Got a request.");
+  // console.log("Created user.");
+  // const newUser = {
+  //   id: req.body._id,
+  //   name: req.body.name,
+  //   email: req.body.email
+  // };
   // await publishEvent('user.created', newUser);  
-  return "created";
+  return "Published";
 };
 
 exports.test_2 = async (req) => {
