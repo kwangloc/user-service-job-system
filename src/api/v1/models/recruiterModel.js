@@ -52,7 +52,7 @@ const recruiterSchema = mongoose.Schema({
     },
     isManager: {
         type: Boolean,
-        default: null
+        default: true
     },
     postedJobs: {
         type: [jobSchema]
