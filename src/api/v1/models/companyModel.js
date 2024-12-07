@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 // sub schema
 const recruiterSchema = new mongoose.Schema({
-    recruiterId: Joi.string().hex().length(24),
+    recruiterId: mongoose.Schema.Types.ObjectId,
     recruiterName: {
         type: String,
         required: true
@@ -11,7 +11,7 @@ const recruiterSchema = new mongoose.Schema({
 })
 
 const jobSchema = new mongoose.Schema({
-    jobId: Joi.string().hex().length(24),
+    jobId: mongoose.Schema.Types.ObjectId,
     title: {
         type: String,
         required: true

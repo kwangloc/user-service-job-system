@@ -13,6 +13,7 @@ router.get('/profile/:companyId', companyController.getCompany);
 // Protected
 router.put('/profile', [auth], companyController.updateCompany);
 router.get('/admin/profile/all', [auth, admin], companyController.getAllCompanies);
+router.patch('/admin/profile/editStatus/:companyId', [auth, admin], companyController.editStatus);
 // router.delete('/admin/profile/:companyId', [auth, admin], companyController.deleteCompany);
 
 // Posted-jobs

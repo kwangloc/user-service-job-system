@@ -108,6 +108,44 @@ exports.createCompany = async (req) => {
   }
 };
 
+exports.editStatus = async (req) => {
+  try {
+    
+    const { companyId } = req.params;
+    const { isActive } = req.body;
+
+    if (isActive !== 'true' && isActive !== 'false') {
+      const error = new Error("isActive must be a boolean");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    // find and update
+    const company = await Company.findByIdAndUpdate(
+      companyId,
+      { isActive: isActive },
+      { new: true }
+    ).select('-password -postedJobs');
+    if (!company) {
+      const error = new Error("Company not found");
+      error.statusCode = 404;
+      throw error;
+    }
+    // rabbitmq
+    const companyToPublish = {
+      userId: companyId,
+      isActive: isActive
+    }; // Note message structure
+
+    await publishEvent('user.account.updated', companyToPublish); // Note message structure
+    // response
+    return company;
+  } catch (err) {
+    throw new Error(`Failed to update company: ${err.message}`);
+  }
+};
+
+
 exports.updateCompany = async (req) => {
   try {
     

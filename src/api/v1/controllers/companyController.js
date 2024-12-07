@@ -55,6 +55,18 @@ exports.updateCompany = async (req, res, next) => {
   }
 };
 
+exports.editStatus = async (req, res, next) => {
+  try {
+    const user = await companyService.editStatus(req);
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+
+
 // exports.deleteCompany = async (req, res, next) => {
 //   try {
 //     const company = await companyService.deleteCompany(req);
