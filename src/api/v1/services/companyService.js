@@ -22,7 +22,7 @@ exports.test_1 = async (req) => {
 
 // Profile
 exports.getAllCompanies = async (req) => {
-  return Company.find().sort("-name");
+  return Company.find().sort("-name").select("-password");
 };
 
 exports.getCompany = async (req) => {
