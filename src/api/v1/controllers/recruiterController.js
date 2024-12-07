@@ -35,10 +35,6 @@ exports.createRecruiter = async (req, res, next) => {
   try {
     const result = await recruiterService.createRecruiter(req);
     res.setHeader('Authorization', result.token);
-    // res.status(201).json({
-    //   message: 'Authentication successful',
-    //   user: result.user
-    // });
     res.status(201).json({
       message: result.message,
       user: result.user

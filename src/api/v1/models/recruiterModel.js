@@ -3,13 +3,21 @@ const mongoose = require('mongoose');
 
 // DB schema
 const jobSchema = new mongoose.Schema({
-    id: Joi.string().hex().length(24),
+    jobId: mongoose.Schema.Types.ObjectId,
     title: {
         type: String,
         required: true
     },
     due: {
         type: Date,
+        required: true
+    }
+})
+
+const companySchema = new mongoose.Schema({
+    companyId: mongoose.Schema.Types.ObjectId,
+    companyName: {
+        type: String,
         required: true
     }
 })
@@ -47,12 +55,9 @@ const recruiterSchema = mongoose.Schema({
         default: null
     },
     company: {
-        type: mongoose.Schema.Types.ObjectId 
-        // ref: "Restaurant" 
-    },
-    isManager: {
-        type: Boolean,
-        default: true
+        type: companySchema,
+        required: true
+        // ref: "company" 
     },
     postedJobs: {
         type: [jobSchema]
@@ -63,17 +68,33 @@ const recruiterSchema = mongoose.Schema({
 const Recruiter = new mongoose.model('Recruiter', recruiterSchema);
 
 // Functions
+const companyValidationSchema = Joi.object({
+    companyId: Joi.string().hex().length(24).required(),
+    companyName: Joi.string().required()
+});
+
 function validateRecruiter(recruiter) { 
     const schema = Joi.object({
         name: Joi.string().min(2).max(50).required(),
-        password: Joi.string().min(6).max(1024).required(),
-        email: Joi.string().min(2).max(255).required().email() // plain password
+        password: Joi.string().min(6).max(1024).required(), // plain password
+        email: Joi.string().min(2).max(255).required().email(),
+        company: companyValidationSchema.required()
     });
     return schema.validate(recruiter);
+}
+
+function validateJob(exp) {
+    const schema = Joi.object({
+        jobId: Joi.string().hex().length(24).required(),
+        title: Joi.string().required(),
+        due: Joi.date().required()
+    });
+    return schema.validate(exp);
 }
 
 module.exports = {
     recruiterSchema,
     Recruiter,
-    validateRecruiter
+    validateRecruiter,
+    validateJob
 };

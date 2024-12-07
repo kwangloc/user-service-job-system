@@ -43,13 +43,21 @@ async function consumeJobEvents() {
 
 // Messages handler function
 function handlePostEvent(routingKey, job) {
-    if (routingKey === 'post.candidate.saved') {
+    if (routingKey === 'post.recruiter.addJob') {
         console.log(`post ${post.id} was created. Updating user preferences...`);
-    } else if (routingKey === 'post.candidate.unSaved') {
+    } else if (routingKey === 'post.recruiter.deleteJob') {
         console.log(`Job ${job.id} was deleted. Updating user preferences...`);
-    } else if (routingKey === 'post.candidate.appStatus') {
+    } else if (routingKey === 'post.candidate.saveJob ') {
         console.log(`Job ${job.id} was deleted. Updating user preferences...`);
-    }
+    } else if (routingKey === 'post.candidate.unsaveJob') {
+        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
+    } else if (routingKey === 'post.candidate.addApp') {
+        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
+    } else if (routingKey === 'post.candidate.editAppStatus') {
+        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
+    } else if (routingKey === 'post.candidate.cancelApp') {
+        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
+    } 
 }
 
 function handleNotiEvent(routingKey, noti) {

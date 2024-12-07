@@ -3,7 +3,7 @@ const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
 const bcrypt = require('bcrypt'); // hashing
 const axios = require('axios');
 
-const { Recruiter, validateRecruiter} = require("../models/recruiterModel");
+const { Recruiter, validateRecruiter, validateJob} = require("../models/recruiterModel");
 const { isValidId, authUser } = require("../validations/validators");
 
 // For testing
@@ -112,7 +112,7 @@ exports.updateRecruiter = async (req) => {
   try {
     
     const updateFields = {};
-    const updateKeys = ["name", "gender", "phone", "dateOfBirth"];
+    const updateKeys = ["name", "gender", "phone", "dateOfBirth", "company"];
 
     updateKeys.forEach((key) => {
       if (req.body[key]) {
@@ -186,34 +186,22 @@ exports.deleteRecruiter = async (req) => {
 
 exports.addPostedJob = async (req) => {
   try {
-    const { jobToSave } = req.body;
+    const { job } = req.body;
     // val jobId
-    if (!isValidId(jobToSave._id)) {
+    if (!isValidId(job.jobId)) {
       const error = new Error("Invalid jobId");
       error.statusCode = 400;
       throw error;
     }
 
-    // Check required fields
-    const requiredFields = ['_id', 'title', 'due']; // Add other required fields
-    for (const field of requiredFields) {
-      if (!jobToSave[field]) {
-        const error = new Error(`Missing required field: ${field}`);
-        error.statusCode = 400;
-        throw error;
-      }
-    }
+    const { error } = validateJob(job);
+    if ( error ) throw new Error(JSON.stringify(error.details));
 
     const recruiter = await Recruiter.findByIdAndUpdate(
       req.user._id,
-      // { $addToSet: { savedJobs: jobToSave } },
       {
         $addToSet: {
-          postedJobs: {
-            _id: jobToSave._id,
-            title: jobToSave.title,
-            due: jobToSave.due
-          }
+          postedJobs: job
         }
       },
       { new: true }

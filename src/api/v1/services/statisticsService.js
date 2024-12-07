@@ -1,6 +1,7 @@
 const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
 
 const { Recruiter, validateRecruiter} = require("../models/recruiterModel");
+const { Company, validateCompany} = require("../models/companyModel");
 const { User, validateUser} = require("../models/userModel");
 const { isValidId, authUser } = require("../validations/validators");
 
@@ -38,6 +39,10 @@ exports.growth = async (req) => {
     recruitersCreatedEachMonth.push({ month: start.getMonth() + 1, year: start.getFullYear(), count });
   }
 
+  // Companies
+  const companines = await Company.find({});
+  const totalCompanies = companines.length;
+
   return {
     // FOR USERS
     users: {
@@ -46,12 +51,16 @@ exports.growth = async (req) => {
       usersCreatedToday,
       usersCreatedEachMonth,
     },
+    // FOR RECRUITERS
     recruiters: {
-      // FOR RECRUITERS
       totalRecruiters,
       // recruitersCreatedThisMonth,
       recruitersCreatedToday,
       recruitersCreatedEachMonth
+    },
+    // FOR COMPANIES
+    companies: {
+      totalCompanies
     }
   };
 };
