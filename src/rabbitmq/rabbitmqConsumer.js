@@ -12,7 +12,7 @@ async function consumeJobEvents() {
         
         const queue = 'user_service_queue';  
         await channel.assertQueue(queue, { durable: true });
-        await channel.bindQueue(queue, exchange, 'job.*');  
+        await channel.bindQueue(queue, exchange, 'post.#');  
         await channel.bindQueue(queue, exchange, 'noti.*');  
 
         console.log(`*Waiting for messages in ${queue}`);
@@ -21,10 +21,12 @@ async function consumeJobEvents() {
         channel.consume(queue, (msg) => {
             if (msg !== null) {
                 const messageContent = JSON.parse(msg.content.toString());
+                // const messageContent = msg.content.toString();
+                // console.log("Received: ", msg.content.toString());
                 console.log('Received message:', msg.fields.routingKey, messageContent);
 
-                if (msg.fields.routingKey.startsWith('job.')) {
-                    handleJobEvent(msg.fields.routingKey, messageContent);
+                if (msg.fields.routingKey.startsWith('post.')) {
+                    handlePostEvent(msg.fields.routingKey, messageContent);
                 } else if (msg.fields.routingKey.startsWith('noti.')) {
                     handleNotiEvent(msg.fields.routingKey, messageContent);
                 }
@@ -40,10 +42,12 @@ async function consumeJobEvents() {
 }
 
 // Messages handler function
-function handleJobEvent(routingKey, job) {
-    if (routingKey === 'job.created') {
-        console.log(`Job ${job.id} was created. Updating user preferences...`);
-    } else if (routingKey === 'job.deleted') {
+function handlePostEvent(routingKey, job) {
+    if (routingKey === 'post.candidate.saved') {
+        console.log(`post ${post.id} was created. Updating user preferences...`);
+    } else if (routingKey === 'post.candidate.unSaved') {
+        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
+    } else if (routingKey === 'post.candidate.appStatus') {
         console.log(`Job ${job.id} was deleted. Updating user preferences...`);
     }
 }
