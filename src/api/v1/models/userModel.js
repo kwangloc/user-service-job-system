@@ -5,8 +5,14 @@ const jwt = require('jsonwebtoken'); // json web token
 //const { objectIdValidator } = require('../validations/validators'); // To check objectId of sub document
 
 // DB schema
+const companySchema = new mongoose.Schema({
+    id: Joi.string().hex().length(24),
+    name: String
+})
+
 const jobSchema = new mongoose.Schema({
     id: Joi.string().hex().length(24),
+    company: companySchema,
     title: {
         type: String,
         required: true
@@ -14,6 +20,10 @@ const jobSchema = new mongoose.Schema({
     due: {
         type: Date,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ["Submitted", "Under Review", "Shortlisted", "Rejected", "Hired"]
     }
 })
 
@@ -144,6 +154,26 @@ function validateSkill(skill) {
     return schema.validate(skill);
 }
 
+//
+const companyValidationSchema = Joi.object({
+    _id: Joi.string().hex().length(24).required(),
+    name: Joi.string().required()
+  });
+  
+// Job Schema Definition
+
+function validateJob(exp) {
+    const schema = Joi.object({
+        _id: Joi.string().hex().length(24).required(),
+        company: companyValidationSchema.required(),
+        title: Joi.string().required(),
+        due: Joi.date().required(),
+        status: Joi.string().valid('Submitted', 'Under Review', 'Shortlisted', 'Rejected', 'Hired')
+    });
+    return schema.validate(exp);
+}
+
+
 function validateExp(exp) {
     const schema = Joi.object({
         company: Joi.string().min(2).max(255).required(),
@@ -167,6 +197,7 @@ function validateEdu(edu) {
 module.exports = {
     userSchema,
     User,
+    validateJob,
     validateUser,
     validateSkill,
     validateExp,

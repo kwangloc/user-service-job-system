@@ -3,13 +3,16 @@ const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
 const bcrypt = require('bcrypt'); // hashing
 const axios = require('axios');
 
-const { User, validateUser, validateSkill, validateExp, validateEdu } = require("../models/userModel");
+const { User, validateUser, validateSkill, validateExp, validateEdu, validateJob } = require("../models/userModel");
 const { isValidId, authUser } = require("../validations/validators");
 
 // For testing
 exports.test_1 = async (req) => {
-  const msgContent = "testing msg";
-  publishEvent('testing.testing.testing', msgContent); 
+  // const msgContent = "testing msg";
+  // publishEvent('testing.testing.testing', msgContent); 
+
+  const msgContent = "applied";
+  publishEvent('user.candidate.apply', msgContent); 
   console.log("Published")
 
   // console.log("***********");
@@ -547,34 +550,33 @@ exports.getSavedJobs = async (req) => {
 
 exports.saveJob = async (req) => {
   try {
-    const { jobToSave } = req.body;
+    const { jobSaved } = req.body;
     // val jobId
-    if (!isValidId(jobToSave._id)) {
+    if (!isValidId(jobSaved._id)) {
       const error = new Error("Invalid jobId");
       error.statusCode = 400;
       throw error;
     }
 
     // Check required fields
-    const requiredFields = ['_id', 'title', 'due']; // Add other required fields
-    for (const field of requiredFields) {
-      if (!jobToSave[field]) {
-        const error = new Error(`Missing required field: ${field}`);
-        error.statusCode = 400;
-        throw error;
-      }
-    }
+    // const requiredFields = ['_id', 'title', 'due']; // Add other required fields
+    // for (const field of requiredFields) {
+    //   if (!jobSaved[field]) {
+    //     const error = new Error(`Missing required field: ${field}`);
+    //     error.statusCode = 400;
+    //     throw error;
+    //   }
+    // }
+
+    const { error } = validateJob(jobSaved);
+    if ( error ) throw new Error(JSON.stringify(error.details));
 
     const user = await User.findByIdAndUpdate(
       req.user._id,
-      // { $addToSet: { savedJobs: jobToSave } },
+      // { $addToSet: { savedJobs: jobSaved } },
       {
         $addToSet: {
-          savedJobs: {
-            _id: jobToSave._id,
-            title: jobToSave.title,
-            due: jobToSave.due
-          }
+          savedJobs: jobSaved
         }
       },
       { new: true }
@@ -640,17 +642,20 @@ exports.getAppliedJobs = async (req) => {
 
 exports.applyJob = async (req) => {
   try {
-    const { jobToApply } = req.body;
+    const { jobApplied } = req.body;
     // val jobId
-    if (!isValidId(jobToApply._id)) {
+    if (!isValidId(jobApplied._id)) {
       const error = new Error("Invalid jobId");
       error.statusCode = 500;
       throw error;
     }
 
+    const { error } = validateJob(jobApplied);
+    if ( error ) throw new Error(JSON.stringify(error.details));
+
     const user = await User.findByIdAndUpdate(
       req.user._id,
-      { $addToSet: { appliedJobs: jobToApply } },
+      { $addToSet: { appliedJobs: jobApplied } },
       { new: true }
     ).select("appliedJobs");
     // err: user not found
