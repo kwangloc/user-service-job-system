@@ -3,7 +3,7 @@ const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
 const bcrypt = require('bcrypt'); // hashing
 const axios = require('axios');
 
-const { Company, validateCompany} = require("../models/companyModel");
+const { Company, validateCompany, validateJob} = require("../models/companyModel");
 const { isValidId, authUser } = require("../validations/validators");
 
 // For testing
@@ -186,34 +186,23 @@ exports.deleteCompany = async (req) => {
 
 exports.addPostedJob = async (req) => {
   try {
-    const { jobToSave } = req.body;
+    const { postedJob } = req.body;
     // val jobId
-    if (!isValidId(jobToSave._id)) {
+    if (!isValidId(postedJob.jobId)) {
       const error = new Error("Invalid jobId");
       error.statusCode = 400;
       throw error;
     }
 
-    // Check required fields
-    const requiredFields = ['_id', 'title', 'due']; // Add other required fields
-    for (const field of requiredFields) {
-      if (!jobToSave[field]) {
-        const error = new Error(`Missing required field: ${field}`);
-        error.statusCode = 400;
-        throw error;
-      }
-    }
+    const { error } = validateJob(postedJob);
+    if ( error ) throw new Error(JSON.stringify(error.details));
 
     const company = await Company.findByIdAndUpdate(
       req.user._id,
-      // { $addToSet: { savedJobs: jobToSave } },
+      // { $addToSet: { savedJobs: postedJob } },
       {
         $addToSet: {
-          postedJobs: {
-            _id: jobToSave._id,
-            title: jobToSave.title,
-            due: jobToSave.due
-          }
+          postedJobs: postedJob
         }
       },
       { new: true }
@@ -227,7 +216,7 @@ exports.addPostedJob = async (req) => {
 
     return company;
   } catch (error) {
-    throw new Error(`Failed to saveJob: ${error.message}`);
+    throw new Error(`Failed to saveJob company: ${error.message}`);
   }
 };
 
@@ -261,7 +250,7 @@ exports.delPostedJob = async (req) => {
     const company = await Company.findByIdAndUpdate(
       req.user._id,
       // { $pull: { skills: skillId } },
-      { $pull: { postedJobs: { _id: jobId } } },
+      { $pull: { postedJobs: { jobId: jobId } } },
       { new: true }
     ).select("postedJobs");
     // err: company not found

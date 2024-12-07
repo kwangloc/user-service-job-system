@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 
 // sub schema
 const recruiterSchema = new mongoose.Schema({
-    id: Joi.string().hex().length(24),
-    name: {
+    recruiterId: Joi.string().hex().length(24),
+    recruiterName: {
         type: String,
         required: true
     }
 })
 
 const jobSchema = new mongoose.Schema({
-    id: Joi.string().hex().length(24),
+    jobId: Joi.string().hex().length(24),
     title: {
         type: String,
         required: true
@@ -20,12 +20,19 @@ const jobSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    salary: {
+        type: String
+    },
+    address: {
+        type: String
+    },
+    numOfApp: {
+        type: Number
+    },
     postedBy: {
         type: recruiterSchema,
-        required: true
     }
 })
-
 
 // db schema
 const companySchema = mongoose.Schema({
@@ -80,8 +87,27 @@ function validateCompany(company) {
     return schema.validate(company);
 }
 
+const recruiterValidationSchema = Joi.object({
+    recruiterId: Joi.string().hex().length(24).required(),
+    recruiterName: Joi.string().required()
+});
+
+function validateJob(exp) {
+    const schema = Joi.object({
+        jobId: Joi.string().hex().length(24).required(),
+        title: Joi.string().required(),
+        due: Joi.date().required(),
+        salary: Joi.string().required(),
+        address: Joi.string().required(),
+        numOfApp: Joi.number().required(),
+        postedBy: recruiterValidationSchema.required()
+    });
+    return schema.validate(exp);
+}
+
 module.exports = {
     companySchema,
     Company,
-    validateCompany
+    validateCompany,
+    validateJob
 };

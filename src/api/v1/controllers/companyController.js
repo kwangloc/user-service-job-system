@@ -65,29 +65,29 @@ exports.updateCompany = async (req, res, next) => {
 // };
 
 // Posted-jobs
-// exports.addPostedJob = async (req, res, next) => {
-//   try {
-//     const result = await companyService.addPostedJob(req);
-//     res.status(200).json(result);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+exports.addPostedJob = async (req, res, next) => {
+  try {
+    const result = await companyService.addPostedJob(req);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
 
-// exports.getPostedJobs = async (req, res, next) => {
-//   try {
-//     const result = await companyService.getPostedJobs(req);
-//     res.status(200).json(result);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+exports.getPostedJobs = async (req, res, next) => {
+  try {
+    const result = await companyService.getPostedJobs(req);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
 
-// exports.delPostedJob = async (req, res, next) => {
-//   try {
-//     const result = await companyService.delPostedJob(req);
-//     res.status(200).json(result);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+exports.delPostedJob = async (req, res, next) => {
+  try {
+    const result = await companyService.delPostedJob(req);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+};

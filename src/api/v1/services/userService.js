@@ -550,9 +550,9 @@ exports.getSavedJobs = async (req) => {
 
 exports.saveJob = async (req) => {
   try {
-    const { jobSaved } = req.body;
+    const { savedJob } = req.body;
     // val jobId
-    if (!isValidId(jobSaved._id)) {
+    if (!isValidId(savedJob._id)) {
       const error = new Error("Invalid jobId");
       error.statusCode = 400;
       throw error;
@@ -561,22 +561,22 @@ exports.saveJob = async (req) => {
     // Check required fields
     // const requiredFields = ['_id', 'title', 'due']; // Add other required fields
     // for (const field of requiredFields) {
-    //   if (!jobSaved[field]) {
+    //   if (!savedJob[field]) {
     //     const error = new Error(`Missing required field: ${field}`);
     //     error.statusCode = 400;
     //     throw error;
     //   }
     // }
 
-    const { error } = validateJob(jobSaved);
+    const { error } = validateJob(savedJob);
     if ( error ) throw new Error(JSON.stringify(error.details));
 
     const user = await User.findByIdAndUpdate(
       req.user._id,
-      // { $addToSet: { savedJobs: jobSaved } },
+      // { $addToSet: { savedJobs: savedJob } },
       {
         $addToSet: {
-          savedJobs: jobSaved
+          savedJobs: savedJob
         }
       },
       { new: true }

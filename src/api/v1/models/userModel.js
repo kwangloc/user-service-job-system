@@ -21,6 +21,9 @@ const jobSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    address: {
+        type: String
+    },
     status: {
         type: String,
         enum: ["Submitted", "Under Review", "Shortlisted", "Rejected", "Hired"]
@@ -158,7 +161,7 @@ function validateSkill(skill) {
 const companyValidationSchema = Joi.object({
     _id: Joi.string().hex().length(24).required(),
     name: Joi.string().required()
-  });
+});
   
 // Job Schema Definition
 
@@ -172,7 +175,6 @@ function validateJob(exp) {
     });
     return schema.validate(exp);
 }
-
 
 function validateExp(exp) {
     const schema = Joi.object({

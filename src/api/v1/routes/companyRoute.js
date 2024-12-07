@@ -16,8 +16,8 @@ router.get('/admin/profile/all', [auth, admin], companyController.getAllCompanie
 // router.delete('/admin/profile/:companyId', [auth, admin], companyController.deleteCompany);
 
 // Posted-jobs
-// router.post('/postedJobs/', auth, companyController.addPostedJob);
-// router.get('/postedJobs/', auth, companyController.getPostedJobs);
-// router.delete('/postedJobs/', auth, companyController.delPostedJob);
+router.post('/postedJobs/', auth, companyController.addPostedJob);
+router.get('/postedJobs/', auth, companyController.getPostedJobs);
+router.delete('/postedJobs/', auth, companyController.delPostedJob);
 
 module.exports = router;
