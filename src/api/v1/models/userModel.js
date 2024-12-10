@@ -6,12 +6,12 @@ const jwt = require('jsonwebtoken'); // json web token
 
 // DB schema
 const companySchema = new mongoose.Schema({
-    id: Joi.string().hex().length(24),
+    _id: Joi.string().hex().length(24),
     name: String
 })
 
 const jobSchema = new mongoose.Schema({
-    id: Joi.string().hex().length(24),
+    _id: Joi.string().hex().length(24),
     company: companySchema,
     title: {
         type: String,

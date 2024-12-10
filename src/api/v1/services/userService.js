@@ -558,16 +558,6 @@ exports.saveJob = async (req) => {
       throw error;
     }
 
-    // Check required fields
-    // const requiredFields = ['_id', 'title', 'due']; // Add other required fields
-    // for (const field of requiredFields) {
-    //   if (!savedJob[field]) {
-    //     const error = new Error(`Missing required field: ${field}`);
-    //     error.statusCode = 400;
-    //     throw error;
-    //   }
-    // }
-
     const { error } = validateJob(savedJob);
     if ( error ) throw new Error(JSON.stringify(error.details));
 
@@ -705,15 +695,6 @@ exports.withdrawApp = async (req) => {
 // function validateSkill(skill) {
 //   if (!skill || typeof skill !== 'object') return false;
 //   const requiredKeys = ['_id', 'title'];
-//   for (const key of requiredKeys) {
-//     if (!(key in skill)) return false;
-//   }
-//   return true;
-// }
-
-// function validateExp(exp) {
-//   if (!exp || typeof exp !== 'object') return false;
-//   const requiredKeys = ['title', 'description', 'duration'];
 //   for (const key of requiredKeys) {
 //     if (!(key in skill)) return false;
 //   }
