@@ -1,5 +1,8 @@
 // import "dotenv/config"; 
 // require('dotenv').config();
+const rabbitmqService = require('../api/v1/services/rabbitmqService');
+
+// const { required } = require('joi');
 const { getRabbitMQConnection } = require('./rabbitmqConnection');
 
 async function consumeJobEvents() {
@@ -23,7 +26,9 @@ async function consumeJobEvents() {
                 const messageContent = JSON.parse(msg.content.toString());
                 // const messageContent = msg.content.toString();
                 // console.log("Received: ", msg.content.toString());
-                console.log('Received message:', msg.fields.routingKey, messageContent);
+                console.log('Received a message from MessageQueue.')
+                console.log('routing key:', msg.fields.routingKey);
+                console.log('content:', messageContent);
 
                 if (msg.fields.routingKey.startsWith('post.')) {
                     handlePostEvent(msg.fields.routingKey, messageContent);
@@ -42,22 +47,28 @@ async function consumeJobEvents() {
 }
 
 // Messages handler function
-function handlePostEvent(routingKey, job) {
+async function handlePostEvent(routingKey, msg) {
     if (routingKey === 'post.recruiter.addJob') {
-        console.log(`post ${post.id} was created. Updating user preferences...`);
-    } else if (routingKey === 'post.recruiter.deleteJob') {
-        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
-    } else if (routingKey === 'post.candidate.saveJob ') {
-        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
-    } else if (routingKey === 'post.candidate.unsaveJob') {
-        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
-    } else if (routingKey === 'post.candidate.addApp') {
-        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
-    } else if (routingKey === 'post.candidate.editAppStatus') {
-        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
-    } else if (routingKey === 'post.candidate.cancelApp') {
-        console.log(`Job ${job.id} was deleted. Updating user preferences...`);
+        const result = await rabbitmqService.addPostedJobRecruter(msg);
+        console.log("result:", result);
     } 
+    else if (routingKey === 'post.recruiter.deleteJob') {
+        const result = await rabbitmqService.delPostedJobRecruter(msg);
+        console.log("result:", result);
+    } 
+    else if (routingKey === 'post.candidate.saveJob ') {
+        const result = await rabbitmqService.addSavedJobCandidate(msg);
+        console.log("result:", result);
+    } 
+    // else if (routingKey === 'post.candidate.unsaveJob') {
+    //     console.log(`Candidate: Removed job ${job.id} from bookmark.`);
+    // } else if (routingKey === 'post.candidate.addApp') {
+    //     console.log(`Candidate: Added application with jobId ${job.id} .`);
+    // } else if (routingKey === 'post.candidate.editAppStatus') {
+    //     console.log(`Candidate: Edited application's status with jobId ${job.id}.`);
+    // } else if (routingKey === 'post.candidate.cancelApp') {
+    //     console.log(`Candidate: Cancelled application with jobId ${job.id}.`);
+    // } 
 }
 
 function handleNotiEvent(routingKey, noti) {

@@ -11,7 +11,10 @@ const companySchema = new mongoose.Schema({
 })
 
 const jobSchema = new mongoose.Schema({
-    _id: Joi.string().hex().length(24),
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     company: companySchema,
     title: {
         type: String,
@@ -31,7 +34,10 @@ const jobSchema = new mongoose.Schema({
 })
 
 const skillSchema = mongoose.Schema({
-    id: Joi.string().hex().length(24),
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -39,6 +45,10 @@ const skillSchema = mongoose.Schema({
 })
 
 const expSchema = mongoose.Schema({
+    // _id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true
+    // },
     company: {
         type: String,
         required: true
@@ -58,6 +68,10 @@ const expSchema = mongoose.Schema({
 })
 
 const eduSchema = mongoose.Schema({
+    // _id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true
+    // },
     school: {
         type: String,
         required: true
@@ -171,6 +185,7 @@ function validateJob(exp) {
         company: companyValidationSchema.required(),
         title: Joi.string().required(),
         due: Joi.date().required(),
+        address: Joi.string().required(),
         status: Joi.string().valid('Submitted', 'Under Review', 'Shortlisted', 'Rejected', 'Hired')
     });
     return schema.validate(exp);

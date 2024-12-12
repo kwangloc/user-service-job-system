@@ -231,6 +231,9 @@ exports.getUserSkills = async (req) => {
 exports.addSingleSkill = async (req) => {
   // val skill object
   const { skill } = req.body;
+  console.log("experience: ");
+  console.group(experience);
+  
   const { error } = validateSkill(skill);
   if (error) throw new Error(JSON.stringify(error.details));
 
@@ -344,7 +347,7 @@ exports.addUserExp = async (req) => {
   const { error } = validateExp(experience);
   if ( error ) throw new Error(JSON.stringify(error.details));
 
-  // add skill
+  // add experience
   try {
     const user = await User.findByIdAndUpdate(
       req.user._id,
@@ -448,12 +451,13 @@ exports.getUserEdu = async (req) => {
 exports.addUserEdu = async (req) => {
   // val body
   const { education } = req.body;
+  console.log("education: ");
   console.log(education);
 
   const { error } = validateEdu(education);
   if ( error ) throw new Error(JSON.stringify(error.details));
 
-  // add skill
+  // add education
   try {
     const user = await User.findByIdAndUpdate(
       req.user._id,
