@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 
 // DB schema
 const jobSchema = new mongoose.Schema({
-    jobId: mongoose.Schema.Types.ObjectId,
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -11,11 +14,15 @@ const jobSchema = new mongoose.Schema({
     due: {
         type: Date,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ["open soon", "opening", "closed"]
     }
 })
 
 const companySchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId,
     companyName: {
         type: String,
         required: true
@@ -85,9 +92,10 @@ function validateRecruiter(recruiter) {
 
 function validateJob(exp) {
     const schema = Joi.object({
-        jobId: Joi.string().hex().length(24).required(),
+        _id: Joi.string().hex().length(24).required(),
         title: Joi.string().required(),
-        due: Joi.date().required()
+        due: Joi.date().required(),
+        status: Joi.string().required()
     });
     return schema.validate(exp);
 }

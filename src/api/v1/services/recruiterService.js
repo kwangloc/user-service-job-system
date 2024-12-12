@@ -188,7 +188,7 @@ exports.addPostedJob = async (req) => {
   try {
     const { job } = req.body;
     // val jobId
-    if (!isValidId(job.jobId)) {
+    if (!isValidId(job._id)) {
       const error = new Error("Invalid jobId");
       error.statusCode = 400;
       throw error;
