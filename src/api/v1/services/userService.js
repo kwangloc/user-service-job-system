@@ -129,13 +129,17 @@ exports.createUser = async (req) => {
 
 exports.updateUser = async (req) => {
   try {
+    // if (req.user.role === 'admin') {
+    //   const { userId } = req.params
+    // } else {
+    //   const userId = req.user._id;
+    // }
+
+    let userId = req.user.role === 'admin' ? req.params.userId : req.user._id;
+
+
     const updateFields = {};
     const updateKeys = ["name", , "location", "gender", "phone", "dateOfBirth"];
-    // if (req.body.name) updateFields.name = req.body.name;
-    // if (req.body.location) updateFields.location = req.body.location;
-    // if (req.body.gender) updateFields.gender = req.body.gender;
-    // if (req.body.phone) updateFields.phone = req.body.phone;
-    // if (req.body.dateOfBirth) updateFields.dateOfBirth = req.body.dateOfBirth;
     updateKeys.forEach((key) => {
       if (req.body[key]) {
         updateFields[key] = req.body[key];
@@ -150,7 +154,7 @@ exports.updateUser = async (req) => {
 
     // find and update
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      userId,
       { $set: updateFields },
       { new: true }
     ).select('-password');

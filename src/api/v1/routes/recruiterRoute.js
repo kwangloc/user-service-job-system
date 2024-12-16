@@ -18,12 +18,16 @@ router.get('/profile/:recruiterId', recruiterController.getRecruiter);
 
 // Protected
 router.put('/profile', auth, recruiterController.updateRecruiter);
-router.get('/admin/profile/all', [auth, admin], recruiterController.getAllRecruiters);
-router.delete('/admin/profile/:recruiterId', [auth, admin], recruiterController.deleteRecruiter);
 
 // Posted-jobs
 router.post('/postedJobs/', auth, recruiterController.addPostedJob);
 router.get('/postedJobs/', auth, recruiterController.getPostedJobs);
 router.delete('/postedJobs/', auth, recruiterController.delPostedJob);
+
+// ADMIN
+router.get('/admin/profile/all', [auth, admin], recruiterController.getAllRecruiters);
+router.put('/admin/profile/:recruiterId', auth, recruiterController.updateRecruiter);
+router.delete('/admin/profile/:recruiterId', [auth, admin], recruiterController.deleteRecruiter);
+
 
 module.exports = router;

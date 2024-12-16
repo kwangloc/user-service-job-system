@@ -23,8 +23,6 @@ router.post('/register', userController.createUser);
 router.get('/profile/:userId', userController.getUser);
 // Protected
 router.put('/profile', auth, userController.updateUser);
-router.get('/admin/profile/all', [auth, admin], userController.getAllUsers);
-router.delete('/admin/profile/:userId', [auth, admin], userController.deleteUser);
 
 // # Skills
 router.get('/skills/:userId', userController.getUserSkills);
@@ -53,5 +51,10 @@ router.delete('/savedJobs/', auth, userController.unsaveJob);
 router.get('/appliedJobs/', auth, userController.getAppliedJobs);
 router.post('/appliedJobs/', auth, userController.applyJob);
 router.delete('/appliedJobs/', auth, userController.withdrawApp);
+
+// ADMIN
+router.get('/admin/profile/all', [auth, admin], userController.getAllUsers);
+router.put('/admin/profile/:userId', [auth, admin], userController.updateUser);
+router.delete('/admin/profile/:userId', [auth, admin], userController.deleteUser);
 
 module.exports = router;

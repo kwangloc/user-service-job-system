@@ -110,6 +110,7 @@ exports.createRecruiter = async (req) => {
 
 exports.updateRecruiter = async (req) => {
   try {
+    let recruiterId = req.user.role === 'admin' ? req.params.recruiterId : req.user._id;
     
     const updateFields = {};
     const updateKeys = ["name", "gender", "phone", "dateOfBirth", "company"];
@@ -128,7 +129,7 @@ exports.updateRecruiter = async (req) => {
 
     // find and update
     const recruiter = await Recruiter.findByIdAndUpdate(
-      req.user._id,
+      recruiterId,
       { $set: updateFields },
       { new: true }
     ).select('-password');
