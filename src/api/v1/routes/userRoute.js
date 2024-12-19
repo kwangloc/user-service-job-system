@@ -22,25 +22,25 @@ router.post('/register', userController.createUser);
 // router.post('/auth', userController.authUser);
 router.get('/profile/:userId', userController.getUser);
 // Protected
-router.put('/profile', auth, userController.updateUser);
+router.put('/profile/:userId', auth, userController.updateUser);
 
 // # Skills
 router.get('/skills/:userId', userController.getUserSkills);
-router.post('/skill', auth, userController.addSingleSkill);
-router.post('/skills', auth, userController.addArraySkill);
-router.delete('/skills/', auth, userController.removeUserSkill);
+router.post('/skill/:userId', auth, userController.addSingleSkill);
+router.post('/skills/:userId', auth, userController.addArraySkill);
+router.delete('/skills/:userId', auth, userController.removeUserSkill);
 
 // Experiences
 router.get('/exp/:userId', userController.getUserExp);
-router.post('/exp', auth, userController.addUserExp);
+router.post('/exp/:userId', auth, userController.addUserExp);
 router.put('/exp/:expId', auth, userController.updateUserExp);
-router.delete('/exp/', auth, userController.removeUserExp);
+router.delete('/exp/:userId', auth, userController.removeUserExp);
 
 // Education
 router.get('/edu/:userId', userController.getUserEdu);
-router.post('/edu', auth, userController.addUserEdu);
+router.post('/edu/:userId', auth, userController.addUserEdu);
 router.put('/edu/:eduId', auth, userController.updateUserEdu);
-router.delete('/edu/', auth, userController.removeUserEdu);
+router.delete('/edu/:userId', auth, userController.removeUserEdu);
 
 // Saved-jobs
 router.get('/savedJobs/', auth, userController.getSavedJobs);

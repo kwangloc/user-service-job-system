@@ -129,14 +129,14 @@ exports.createUser = async (req) => {
 
 exports.updateUser = async (req) => {
   try {
-    // if (req.user.role === 'admin') {
-    //   const { userId } = req.params
-    // } else {
-    //   const userId = req.user._id;
-    // }
+    // let userId = req.user.role === 'admin' ? req.params.userId : req.user._id;
+    const { userId } = req.params;
 
-    let userId = req.user.role === 'admin' ? req.params.userId : req.user._id;
-
+    if (req.user.role !== 'admin' && userId !== req.user._id.toString()) {
+      const error = new Error("Access denied.");
+      error.statusCode = 403;
+      throw error;
+    }
 
     const updateFields = {};
     const updateKeys = ["name", , "location", "gender", "phone", "dateOfBirth"];
@@ -233,10 +233,20 @@ exports.getUserSkills = async (req) => {
 };
 
 exports.addSingleSkill = async (req) => {
+
+  const { userId } = req.params;
+
+  if (req.user.role !== 'admin' && userId !== req.user._id.toString()) {
+    const error = new Error("Access denied.");
+    error.statusCode = 403;
+    throw error;
+  }
+
   // val skill object
+
   const { skill } = req.body;
-  console.log("experience: ");
-  console.group(experience);
+  console.log("skill: ");
+  console.group(skill);
   
   const { error } = validateSkill(skill);
   if (error) throw new Error(JSON.stringify(error.details));
@@ -250,7 +260,7 @@ exports.addSingleSkill = async (req) => {
   // add skill
   try {
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      userId,
       { $addToSet: { skills: skill } },
       { new: true }
     ).select("skills");
@@ -261,6 +271,14 @@ exports.addSingleSkill = async (req) => {
 };
 
 exports.addArraySkill = async (req) => {
+  const { userId } = req.params;
+
+  if (req.user.role !== 'admin' && userId !== req.user._id.toString()) {
+    const error = new Error("Access denied.");
+    error.statusCode = 403;
+    throw error;
+  }
+
   // val skill object
   const { skills } = req.body;
   if (!Array.isArray(skills)) {
@@ -287,7 +305,7 @@ exports.addArraySkill = async (req) => {
   // add skill
   try {
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      userId,
       { $addToSet: { skills: { $each: skills } } },
       { new: true }
     ).select("skills");
@@ -298,6 +316,14 @@ exports.addArraySkill = async (req) => {
 };
 
 exports.removeUserSkill = async (req) => {
+  const { userId } = req.params;
+
+  if (req.user.role !== 'admin' && userId !== req.user._id.toString()) {
+    const error = new Error("Access denied.");
+    error.statusCode = 403;
+    throw error;
+  }
+
   // val skillId
   const { skillId } = req.body;
   if (!isValidId(skillId)) {
@@ -308,7 +334,7 @@ exports.removeUserSkill = async (req) => {
 
   try {
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      userId,
       // { $pull: { skills: skillId } },
       { $pull: { skills: { _id: skillId } } },
       { new: true }
@@ -344,6 +370,14 @@ exports.getUserExp = async (req) => {
 
 exports.addUserExp = async (req) => {
   // val skill object
+  const { userId } = req.params;
+
+  if (req.user.role !== 'admin' && userId !== req.user._id.toString()) {
+    const error = new Error("Access denied.");
+    error.statusCode = 403;
+    throw error;
+  }
+
   const { experience } = req.body;
   console.log("experience: ");
   console.group(experience);
@@ -354,7 +388,7 @@ exports.addUserExp = async (req) => {
   // add experience
   try {
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      userId,
       { $addToSet: { experience: experience } },
       { new: true }
     ).select("experience");
@@ -405,10 +439,15 @@ exports.updateUserExp = async (req) => {
 
 exports.removeUserExp = async (req) => {
   // val expId
-  const { expId } = req.body;
+  const { userId } = req.params;
 
-  console.log(req.user._id);
-  console.log(expId);
+  if (req.user.role !== 'admin' && userId !== req.user._id.toString()) {
+    const error = new Error("Access denied.");
+    error.statusCode = 403;
+    throw error;
+  }
+
+  const { expId } = req.body;
 
   if (!isValidId(expId)) {
     const error = new Error("Invalid expId");
@@ -418,7 +457,7 @@ exports.removeUserExp = async (req) => {
   
   try {
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      userId,
       { $pull: { experience: { _id: expId } } },
       { new: true }
     ).select("experience");
@@ -454,6 +493,14 @@ exports.getUserEdu = async (req) => {
 
 exports.addUserEdu = async (req) => {
   // val body
+  const { userId } = req.params;
+
+  if (req.user.role !== 'admin' && userId !== req.user._id.toString()) {
+    const error = new Error("Access denied.");
+    error.statusCode = 403;
+    throw error;
+  }
+
   const { education } = req.body;
   console.log("education: ");
   console.log(education);
@@ -464,7 +511,7 @@ exports.addUserEdu = async (req) => {
   // add education
   try {
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      userId,
       { $addToSet: { education: education } },
       { new: true }
     ).select("education");
@@ -514,12 +561,15 @@ exports.updateUserEdu = async (req) => {
 };
 
 exports.removeUserEdu = async (req) => {
-  // val expId
+  const { userId } = req.params;
+
+  if (req.user.role !== 'admin' && userId !== req.user._id.toString()) {
+    const error = new Error("Access denied.");
+    error.statusCode = 403;
+    throw error;
+  }
+
   const { eduId } = req.body;
-
-  console.log(req.user._id);
-  console.log(eduId);
-
   if (!isValidId(eduId)) {
     const error = new Error("Invalid expId");
     error.statusCode = 500;
@@ -528,7 +578,7 @@ exports.removeUserEdu = async (req) => {
   
   try {
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      userId,
       { $pull: { education: { _id: eduId } } },
       { new: true }
     ).select("education");
