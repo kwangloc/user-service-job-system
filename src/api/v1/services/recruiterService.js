@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt'); // hashing
 const axios = require('axios');
 
 const { Recruiter, validateRecruiter, validateJob} = require("../models/recruiterModel");
+const { Company, validateCompany} = require("../models/companyModel");
 const { isValidId, authUser } = require("../validations/validators");
 
 // For testing
@@ -45,22 +46,36 @@ exports.getRecruiter = async (req) => {
 };
 
 exports.createRecruiter = async (req) => {
+  const company = await Company.findById(req.user._id);
+  
+  if (!company) {
+    const error = new Error("Company not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
   // 1. validate req.body
-  const { error } = validateRecruiter(req.body);
+  const { recruiter } = req.body;
+  const { error } = validateRecruiter(recruiter);
   if (error) throw new Error(JSON.stringify(error.details));
   try {
     // 2. check existing email
-    let existingRecruiter = await Recruiter.findOne({ email: req.body.email });
+    let existingRecruiter = await Recruiter.findOne({ email: recruiter.email });
     if (existingRecruiter) {
-      const duplicateError = new Error("A recruiter with this email already exists");
+      const duplicateError = new Error("Recruiter with this email already exists");
       duplicateError.statusCode = 400; // Conflict
       throw duplicateError;
     }
     // 3. create the recruiter
+    recruiter.company = {
+      _id: company._id,
+      companyName: company.name
+    }
+    console.log("recruiter:", recruiter);
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(recruiter.password, salt);
     const newRecruiter = new Recruiter({
-      ...req.body,
+      ...recruiter,
       password: hashedPassword
     });
 

@@ -84,8 +84,8 @@ function validateRecruiter(recruiter) {
     const schema = Joi.object({
         name: Joi.string().min(2).max(50).required(),
         password: Joi.string().min(6).max(1024).required(), // plain password
-        email: Joi.string().min(2).max(255).required().email(),
-        company: companyValidationSchema.required()
+        email: Joi.string().min(2).max(255).required().email()
+        // company: companyValidationSchema.required()
     });
     return schema.validate(recruiter);
 }
