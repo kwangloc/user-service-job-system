@@ -11,13 +11,20 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    due: {
-        type: Date,
+    address: {
+        type: String
+    },
+    dateStart: {
+        type: String,
+        required: true
+    },
+    dateDue: {
+        type: String,
         required: true
     },
     status: {
         type: String,
-        enum: ["open soon", "opening", "closed"]
+        enum: ["Open soon", "Opening", "Closed"]
     }
 })
 
@@ -58,7 +65,7 @@ const recruiterSchema = mongoose.Schema({
         default: ''
     },
     dateOfBirth: {
-        type: Date,
+        type: String,
         default: null
     },
     company: {
@@ -90,14 +97,16 @@ function validateRecruiter(recruiter) {
     return schema.validate(recruiter);
 }
 
-function validateJob(exp) {
+function validateJob(job) {
     const schema = Joi.object({
         _id: Joi.string().hex().length(24).required(),
         title: Joi.string().required(),
-        due: Joi.date().required(),
+        address: Joi.string().required(),
+        dateStart: Joi.string().required(),
+        dateDue: Joi.string().required(),
         status: Joi.string().required()
     });
-    return schema.validate(exp);
+    return schema.validate(job);
 }
 
 module.exports = {

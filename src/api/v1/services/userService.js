@@ -719,6 +719,42 @@ exports.applyJob = async (req) => {
   }
 };
 
+exports.editAppliedJob = async (req) => {
+  try {
+    const { userId } = req.params;
+
+    if (req.user.role !== 'admin' && userId !== req.user._id.toString()) {
+      const error = new Error("Access denied.");
+      error.statusCode = 403;
+      throw error;
+    }
+
+    const { jobId, status } = req.body;
+
+    if (!isValidId(jobId)) {
+      const error = new Error("Invalid jobId");
+      error.statusCode = 500;
+      throw error;
+    }
+
+    const user = await User.findOneAndUpdate(
+      { _id: userId, "appliedJobs._id": jobId },
+      { $set: { "appliedJobs.$.status": status } },
+      { new: true }
+    ).select("appliedJobs");
+
+    if (!user) {
+      const error = new Error("User or job not found");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    return user;
+  } catch (err) {
+    throw new Error(`Failed to editAppliedJob: ${err.message}`);
+  }
+};
+
 exports.withdrawApp = async (req) => {
   try {
     const { jobId } = req.body;

@@ -50,6 +50,7 @@ router.delete('/savedJobs/', auth, userController.unsaveJob);
 // Applied-jobs
 router.get('/appliedJobs/', auth, userController.getAppliedJobs);
 router.post('/appliedJobs/', auth, userController.applyJob);
+router.put('/appliedJobs/:userId', auth, userController.editAppliedJob);
 router.delete('/appliedJobs/', auth, userController.withdrawApp);
 
 // ADMIN

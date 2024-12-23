@@ -20,16 +20,28 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    due: {
-        type: Date,
-        required: true
-    },
     address: {
         type: String
     },
+    dateStart: {
+        type: String,
+        required: true
+    },
+    dateDue: {
+        type: String,
+        required: true
+    },
+    resume: {
+        type: String,
+        default: ''
+    },
+    dateSubmit: {
+        type: String,
+        default: ''
+    },
     status: {
         type: String,
-        enum: ["Submitted", "Under Review", "Shortlisted", "Rejected", "Hired"]
+        enum: ["Not submmit", "Submitted", "Under Review", "Shortlisted", "Rejected", "Hired"]
     }
 })
 
@@ -119,7 +131,7 @@ const userSchema = mongoose.Schema({
         default: ''
     },
     dateOfBirth: {
-        type: Date,
+        type: String,
         default: null
     },
     location: {
@@ -179,16 +191,19 @@ const companyValidationSchema = Joi.object({
   
 // Job Schema Definition
 
-function validateJob(exp) {
+function validateJob(job) {
     const schema = Joi.object({
         _id: Joi.string().hex().length(24).required(),
         company: companyValidationSchema.required(),
         title: Joi.string().required(),
-        due: Joi.date().required(),
         address: Joi.string().required(),
-        status: Joi.string().valid('Submitted', 'Under Review', 'Shortlisted', 'Rejected', 'Hired')
+        dateStart: Joi.string().required(),
+        dateDue: Joi.string().required(),
+        resume: Joi.string().required(),
+        dateSubmit: Joi.string().required(),
+        status: Joi.string().valid('Not submmit', 'Submitted', 'Under Review', 'Shortlisted', 'Rejected', 'Hired')
     });
-    return schema.validate(exp);
+    return schema.validate(job);
 }
 
 function validateExp(exp) {

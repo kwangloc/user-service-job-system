@@ -256,6 +256,15 @@ exports.applyJob = async (req, res, next) => {
   }
 };
 
+exports.editAppliedJob = async (req, res, next) => {
+  try {
+    const result = await userService.editAppliedJob(req);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.withdrawApp = async (req, res, next) => {
   try {
     const result = await userService.withdrawApp(req);
