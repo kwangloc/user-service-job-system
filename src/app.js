@@ -29,7 +29,7 @@ require('./api/v1/startup/db.js')(); // Connect to DB
 console.log(`*app: ${app.get('env')}`); // dev env by default
 // RabbitMQ
 setupRabbitMQ();
-consumeJobEvents();
+// consumeJobEvents();
 // PORT
 const port = process.env.PORT || 3009;
 app.listen(port, () => console.log('*User service is listening on port', port));

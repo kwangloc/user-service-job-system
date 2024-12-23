@@ -60,9 +60,11 @@ async function handlePostEvent(routingKey, msg) {
         const result = await rabbitmqService.addSavedJobCandidate(msg);
         console.log("result:", result);
     } 
-    // else if (routingKey === 'post.candidate.unsaveJob') {
-    //     console.log(`Candidate: Removed job ${job.id} from bookmark.`);
-    // } else if (routingKey === 'post.candidate.addApp') {
+    else if (routingKey === 'post.candidate.unsaveJob') {
+        console.log(`Candidate: Removed job ${job.id} from bookmark.`);
+    } 
+    // 
+    // else if (routingKey === 'post.candidate.addApp') {
     //     console.log(`Candidate: Added application with jobId ${job.id} .`);
     // } else if (routingKey === 'post.candidate.editAppStatus') {
     //     console.log(`Candidate: Edited application's status with jobId ${job.id}.`);
