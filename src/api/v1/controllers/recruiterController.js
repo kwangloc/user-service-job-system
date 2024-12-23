@@ -31,6 +31,15 @@ exports.getRecruiter = async (req, res, next) => {
   }
 };
 
+exports.getRecruitersByCompany = async (req, res, next) => {
+  try {
+    const users = await recruiterService.getRecruitersByCompany(req);
+    res.status(200).json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.createRecruiter = async (req, res, next) => {
   try {
     const result = await recruiterService.createRecruiter(req);

@@ -39,7 +39,7 @@ exports.addSavedJobCandidate = async (msg) => {
 };
 
 // RECRUITER
-exports.addPostedJobRecruter = async (msg) => {
+exports.addPostedJobRecruiter = async (msg) => {
   try {
     const recruiter = await Recruiter.findByIdAndUpdate(
         msg.recruiterId,
@@ -65,7 +65,7 @@ exports.addPostedJobRecruter = async (msg) => {
   }
 };
 
-exports.delPostedJobRecruter = async (msg) => {
+exports.delPostedJobRecruiter = async (msg) => {
   try {
     const recruiter = await Recruiter.findByIdAndUpdate(
         msg.recruiterId,

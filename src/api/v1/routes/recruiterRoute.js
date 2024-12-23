@@ -18,6 +18,7 @@ router.get('/profile/:recruiterId', recruiterController.getRecruiter);
 
 // Protected
 router.put('/profile', auth, recruiterController.updateRecruiter);
+router.get('/getByCompany/:companyId', auth, recruiterController.getRecruitersByCompany);
 
 // Posted-jobs
 router.post('/postedJobs/', auth, recruiterController.addPostedJob);

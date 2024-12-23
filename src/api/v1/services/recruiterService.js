@@ -45,6 +45,33 @@ exports.getRecruiter = async (req) => {
   return recruiter;
 };
 
+exports.getRecruitersByCompany = async (req) => {
+  const { companyId } = req.params;
+
+  if (req.user.role !== 'admin' && companyId !== req.user._id.toString()) {
+    const error = new Error("Access denied.");
+    error.statusCode = 403;
+    throw error;
+  }
+
+  // invalid id
+  if (!isValidId(companyId)) {
+    const error = new Error("Invalid companyId");
+    error.statusCode = 500;
+    throw error;
+  }
+  // find by id
+  const recruiters = await Recruiter.find({ "company._id": companyId }).select("-password");
+
+  // not found id
+  if (!recruiters) {
+    const error = new Error("recruiters not found");
+    error.statusCode = 404;
+    throw error;
+  }
+  return recruiters;
+};
+
 exports.createRecruiter = async (req) => {
   const company = await Company.findById(req.user._id);
   

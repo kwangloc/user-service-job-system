@@ -49,11 +49,11 @@ async function consumeJobEvents() {
 // Messages handler function
 async function handlePostEvent(routingKey, msg) {
     if (routingKey === 'post.recruiter.addJob') {
-        const result = await rabbitmqService.addPostedJobRecruter(msg);
+        const result = await rabbitmqService.addPostedJobRecruiter(msg);
         console.log("result:", result);
     } 
     else if (routingKey === 'post.recruiter.deleteJob') {
-        const result = await rabbitmqService.delPostedJobRecruter(msg);
+        const result = await rabbitmqService.delPostedJobRecruiter(msg);
         console.log("result:", result);
     } 
     else if (routingKey === 'post.candidate.saveJob ') {
