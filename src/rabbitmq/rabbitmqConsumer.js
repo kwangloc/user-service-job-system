@@ -61,16 +61,18 @@ async function handlePostEvent(routingKey, msg) {
         console.log("result:", result);
     } 
     else if (routingKey === 'post.candidate.unsaveJob') {
-        console.log(`Candidate: Removed job ${job.id} from bookmark.`);
+        const result = await rabbitmqService.removeSavedJobCandidate(msg);
+        console.log("result:", result);
+    } else if (routingKey === 'post.candidate.addApp') {
+        const result = await rabbitmqService.addAppliedJobCandidate(msg);
+        console.log("result:", result);
+    } else if (routingKey === 'post.candidate.cancelApp') {
+        const result = await rabbitmqService.cancelAppliedJobCandidate(msg);
+        console.log("result:", result);
+    } else if (routingKey === 'post.candidate.editAppStatus') {
+        const result = await rabbitmqService.editAppliedJobCandidate(msg);
+        console.log("result:", result);
     } 
-    // 
-    // else if (routingKey === 'post.candidate.addApp') {
-    //     console.log(`Candidate: Added application with jobId ${job.id} .`);
-    // } else if (routingKey === 'post.candidate.editAppStatus') {
-    //     console.log(`Candidate: Edited application's status with jobId ${job.id}.`);
-    // } else if (routingKey === 'post.candidate.cancelApp') {
-    //     console.log(`Candidate: Cancelled application with jobId ${job.id}.`);
-    // } 
 }
 
 function handleNotiEvent(routingKey, noti) {
