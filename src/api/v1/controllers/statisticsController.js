@@ -27,3 +27,13 @@ exports.userTracking = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getCities = async (req, res, next) => {
+  try {
+    const users = await statisticsService.getCities(req);
+    res.status(200).json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+

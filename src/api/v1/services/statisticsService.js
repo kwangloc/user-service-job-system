@@ -3,6 +3,7 @@ const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
 const { Recruiter, validateRecruiter} = require("../models/recruiterModel");
 const { Company, validateCompany} = require("../models/companyModel");
 const { User, validateUser} = require("../models/userModel");
+const { City, validateCity} = require("../models/cityModel");
 const { isValidId, authUser } = require("../validations/validators");
 
 
@@ -87,6 +88,10 @@ exports.demographic = async (req) => {
 
 exports.userTracking = async (req) => {
   return User.find().sort("-name");
+};
+
+exports.getCities = async (req) => {
+  return City.find().sort("index");
 };
 
 
