@@ -68,6 +68,10 @@ const recruiterSchema = mongoose.Schema({
         type: String,
         default: null
     },
+    profileImage: {
+        type: String,
+        default: ''
+    },
     company: {
         type: companySchema,
         required: true

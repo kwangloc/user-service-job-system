@@ -134,7 +134,11 @@ const userSchema = mongoose.Schema({
         type: String,
         default: null
     },
-    location: {
+    address: {
+        type: String,
+        default: ''
+    },
+    profileImage: {
         type: String,
         default: ''
     },

@@ -57,13 +57,8 @@ const companySchema = mongoose.Schema({
         type: String,
         default: ''
     },
-    city: {
-        type: String,
-        default: ''
-    },
     address: {
-        type: String,
-        default: ''
+        type: [String],
     },
     phone: {
         type: String,
