@@ -36,9 +36,41 @@ exports.addPostedJobRecruiter = async (msg) => {
         jobId: msg.job._id
     };
   } catch (error) {
-    throw new Error(`Failed to addPostedJob: ${error.message}`);
+    return `Failed to addPostedJob: ${error.message}`;
   }
 };
+
+exports.editPostedJobRecruiter = async (msg) => {
+  try {
+    // const recruiter = await Recruiter.findByIdAndUpdate(
+    //     { _id: msg.recruiterId, "postedJobs._id": msg.job._id },
+    //     { $set: { "postedJobs":  msg.job.status } },
+    //     { new: true }
+    // ).select("_id postedJobs");
+
+    const recruiter = await Recruiter.findOneAndUpdate(
+      { _id: msg.recruiterId, "postedJobs._id": msg.job._id },
+      { $set: { "postedJobs.$": msg.job } },
+      { new: true }
+    ).select("_id postedJobs");
+
+    // err: recruiter not found
+    if (!recruiter) {
+      const error = new Error("Recruiter not found");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    return {
+        recruiterId: recruiter._id,
+        jobId: msg.job._id
+    };
+  } catch (error) {
+    return `Failed to unsaveJob: ${error.message}`;
+  }
+};
+
+
 
 exports.delPostedJobRecruiter = async (msg) => {
   try {
@@ -58,7 +90,7 @@ exports.delPostedJobRecruiter = async (msg) => {
         jobId: msg.job._id
     };
   } catch (err) {
-    throw new Error(`Failed to unsaveJob: ${err.message}`);
+    return `Failed to unsaveJob: ${error.message}`;
   }
 };
 
@@ -84,7 +116,10 @@ exports.addSavedJobCandidate = async (msg) => {
           jobId: msg.job._id
       };
   } catch (error) {
-    throw new Error(`Failed to addPostedJob: ${error.message}`);
+    // throw new Error(`Failed to addSavedJobCandidate: ${error.message}`);
+    // console.log(`Failed to addSavedJobCandidate: ${error.message}`);
+    return `Failed to addSavedJobCandidate: ${error.message}`;
+    // next(error);
   }
 };
 
@@ -107,7 +142,7 @@ exports.removeSavedJobCandidate = async (msg) => {
       jobId: msg.job._id
   };
   } catch (err) {
-    throw new Error(`Failed to removeSavedJobCandidate: ${err.message}`);
+    return `Failed to removeSavedJobCandidate: ${error.message}`;
   }
 };
 
@@ -132,7 +167,7 @@ exports.addAppliedJobCandidate = async (msg) => {
           jobId: msg.job._id
       };
   } catch (error) {
-    throw new Error(`Failed to addAppliedJobCandidate: ${error.message}`);
+    return `Failed to addAppliedJobCandidate: ${error.message}`;
   }
 };
 
@@ -153,9 +188,9 @@ exports.cancelAppliedJobCandidate = async (msg) => {
     return {
       userId: user._id,
       jobId: msg.job._id
-  };
+    };
   } catch (err) {
-    throw new Error(`Failed to cancelAppliedJobCandidate: ${err.message}`);
+    return `Failed to cancelAppliedJobCandidate: ${error.message}`;
   }
 };
 
@@ -179,7 +214,7 @@ exports.editAppliedJobCandidate = async (msg) => {
       jobId: msg.job._id
   };
   } catch (err) {
-    throw new Error(`Failed to cancelAppliedJobCandidate: ${err.message}`);
+    return `Failed to cancelAppliedJobCandidate: ${error.message}`;
   }
 };
 

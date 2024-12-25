@@ -3,9 +3,9 @@ const { publishEvent, formatNewUserMsg } = require('../../../rabbitmq/rabbitmqPu
 
 exports.test_1 = async (req, res, next) => {
   try {
-    // const result = await recruiterService.addUserSkill2(req);
+    const result = await recruiterService.test_1(req);
     // console.log(typeof result);
-    res.status(200).json("recruiter health ok!");
+    res.status(200).json(result);
   } catch (err) {
     next(err);
   }

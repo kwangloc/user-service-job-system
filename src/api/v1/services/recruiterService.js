@@ -9,16 +9,37 @@ const { isValidId, authUser } = require("../validations/validators");
 
 // For testing
 exports.test_1 = async (req) => {
-  console.log("***********");
-  console.log("Got a request.");
-  console.log("Created user.");
-  const newUser = {
-    id: req.body._id,
-    name: req.body.name,
-    email: req.body.email
-  };
-  // await publishEvent('user.created', newUser);  
-  return "created";
+  try {
+    // const recruiter = await Recruiter.findByIdAndUpdate(
+    //     { _id: req.body.recruiterId, "postedJobs._id": req.body.job._id },
+    //     { $set: { "postedJobs":  req.body.job } },
+    //     { new: true }
+    // ).select("_id postedJobs");
+
+    const recruiterId = req.body.recruiterId;
+    const jobId = req.body.job._id;
+    const updatedJob = req.body.job;
+
+    const recruiter = await Recruiter.findOneAndUpdate(
+      { _id: recruiterId, "postedJobs._id": jobId },
+      { $set: { "postedJobs.$": updatedJob } },
+      { new: true }
+    ).select("_id postedJobs");
+
+    // err: recruiter not found
+    if (!recruiter) {
+      const error = new Error("Recruiter not found");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    return {
+        recruiterId: recruiter._id,
+        jobId: req.body.job._id
+    };
+  } catch (error) {
+    return `Failed test_1: ${error.message}`;
+  }
 };
 
 // Profile

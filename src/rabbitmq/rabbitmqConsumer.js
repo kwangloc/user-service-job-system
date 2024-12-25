@@ -50,28 +50,28 @@ async function consumeJobEvents() {
 async function handlePostEvent(routingKey, msg) {
     if (routingKey === 'post.recruiter.addJob') {
         const result = await rabbitmqService.addPostedJobRecruiter(msg);
-        console.log("result:", result);
-    } 
-    else if (routingKey === 'post.recruiter.deleteJob') {
+        console.log("result addJob: ", result);
+    } else if (routingKey === 'post.recruiter.editJob') {
+        const result = await rabbitmqService.editPostedJobRecruiter(msg);
+        console.log("result editJob: ", result);
+    } else if (routingKey === 'post.recruiter.deleteJob') {
         const result = await rabbitmqService.delPostedJobRecruiter(msg);
-        console.log("result:", result);
-    } 
-    else if (routingKey === 'post.candidate.saveJob ') {
+        console.log("result deleteJob: ", result);
+    } else if (routingKey === 'post.candidate.saveJob') {
         const result = await rabbitmqService.addSavedJobCandidate(msg);
-        console.log("result:", result);
-    } 
-    else if (routingKey === 'post.candidate.unsaveJob') {
+        console.log("result saveJob: ", result);
+    } else if (routingKey === 'post.candidate.unsaveJob') {
         const result = await rabbitmqService.removeSavedJobCandidate(msg);
-        console.log("result:", result);
+        console.log("result unsaveJob: ", result);
     } else if (routingKey === 'post.candidate.addApp') {
         const result = await rabbitmqService.addAppliedJobCandidate(msg);
-        console.log("result:", result);
+        console.log("result addApp: ", result);
     } else if (routingKey === 'post.candidate.cancelApp') {
         const result = await rabbitmqService.cancelAppliedJobCandidate(msg);
-        console.log("result:", result);
+        console.log("result cancelApp: ", result);
     } else if (routingKey === 'post.candidate.editAppStatus') {
         const result = await rabbitmqService.editAppliedJobCandidate(msg);
-        console.log("result:", result);
+        console.log("result editAppStatus: ", result);
     } 
 }
 
