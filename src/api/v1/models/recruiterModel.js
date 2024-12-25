@@ -25,6 +25,10 @@ const jobSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ["Open soon", "Opening", "Closed"]
+    },
+    totalApp: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -56,8 +60,8 @@ const recruiterSchema = mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ["male", "female", "prefer not to say"],
-        default: "male",  
+        enum: ["Male", "Female", "Prefer not to say"],
+        default: "Male",  
         required: true
     },
     phone: {

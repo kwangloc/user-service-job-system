@@ -41,7 +41,7 @@ const jobSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["Not submmit", "Submitted", "Under Review", "Shortlisted", "Rejected", "Hired"]
+        enum: ["Not submit", "Submitted", "Under Review", "Shortlisted", "Rejected", "Hired"]
     }
 })
 
@@ -122,8 +122,8 @@ const userSchema = mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ["male", "female", "prefer not to say"],
-        default: "male",  
+        enum: ["Male", "Female", "Prefer not to say"],
+        default: "Male",  
         required: true
     },
     phone: {
