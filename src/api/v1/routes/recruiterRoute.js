@@ -13,7 +13,7 @@ router.post('/test_1', recruiterController.test_1);
 
 // # Profile
 // Public
-router.post('/register', auth, recruiterController.createRecruiter);
+router.post('/register', auth, recruiterController.createRecruiter); // By company
 router.get('/profile/:recruiterId', recruiterController.getRecruiter);
 
 // Protected

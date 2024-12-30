@@ -6,6 +6,8 @@ const { User, validateUser} = require("../models/userModel");
 const { City, validateCity} = require("../models/cityModel");
 const { isValidId, authUser } = require("../validations/validators");
 
+const { JobTagger, initJobTagger } = require("../middlewares/jobTaggerClass");
+
 
 exports.growth = async (req) => {
   const today = new Date();
@@ -93,5 +95,17 @@ exports.userTracking = async (req) => {
 exports.getCities = async (req) => {
   return City.find().sort("index");
 };
+
+exports.getTagsOfPost = async (req) => {
+  const jobTitle = req.body.jobTitle;
+  const jobDescription = req.body.jobDescription;
+  const tagger = await initJobTagger();
+
+  const tags = tagger.getListOfTags(jobTitle, jobDescription);
+  console.log(tags);
+  return tags;
+};
+
+
 
 

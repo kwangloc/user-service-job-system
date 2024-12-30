@@ -1,5 +1,3 @@
-// import "dotenv/config"; 
-// require('dotenv').config();
 const rabbitmqService = require('../api/v1/services/rabbitmqService');
 
 // const { required } = require('joi');

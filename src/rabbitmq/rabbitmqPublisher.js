@@ -1,5 +1,3 @@
-// import "dotenv/config"; 
-// require('dotenv').config();
 const { getRabbitMQConnection } = require('./rabbitmqConnection');
 
 async function publishEvent(routingKey, msg) {

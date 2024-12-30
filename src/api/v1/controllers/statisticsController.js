@@ -37,3 +37,14 @@ exports.getCities = async (req, res, next) => {
   }
 };
 
+exports.getTagsOfPost = async (req, res, next) => {
+  try {
+    const result = await statisticsService.getTagsOfPost(req);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+

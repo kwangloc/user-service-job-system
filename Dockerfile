@@ -8,11 +8,10 @@ RUN npm install
 
 COPY . .
 
-# ENV JWT_PRIVATE_KEY=lucas_1409
-
 # container's port
-EXPOSE 3000
+EXPOSE 80
 
-WORKDIR /app/src
-CMD ["node", "app.js"]
+# WORKDIR /app/src
+# CMD ["node", "app.js"]
 # CMD ["node", "./src/app.js"]
+CMD ["npm", "start"]

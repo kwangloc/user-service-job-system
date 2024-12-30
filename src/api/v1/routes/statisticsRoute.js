@@ -9,4 +9,6 @@ router.get('/demographic', [auth, admin], statisticsController.demographic);
 router.get('/userTracking', [auth, admin], statisticsController.userTracking);
 router.get('/cities', statisticsController.getCities);
 
+router.get('/getTags', statisticsController.getTagsOfPost);
+
 module.exports = router;

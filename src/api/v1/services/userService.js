@@ -139,7 +139,7 @@ exports.updateUser = async (req) => {
     }
 
     const updateFields = {};
-    const updateKeys = ["name", , "location", "gender", "phone", "dateOfBirth"];
+    const updateKeys = ["name", "gender", "phone", "dateOfBirth", "address", "profileImage"];
     updateKeys.forEach((key) => {
       if (req.body[key]) {
         updateFields[key] = req.body[key];
@@ -158,6 +158,8 @@ exports.updateUser = async (req) => {
       { $set: updateFields },
       { new: true }
     ).select('-password');
+
+    console.log('User: ', user);
     if (!user) {
       const error = new Error("User not found");
       error.statusCode = 404;
@@ -180,7 +182,8 @@ exports.updateUser = async (req) => {
     // response
     return user;
   } catch (err) {
-    throw new Error(`Failed to update user: ${err.message}`);
+    // throw new Error(`Failed to update user: ${err.message}`);
+    throw new Error(`Failed to update user: ${err}`);
   }
 };
 
