@@ -60,7 +60,15 @@ const companySchema = mongoose.Schema({
     address: {
         type: [String],
     },
+    website: {
+        type: String,
+        default: ''
+    },
     phone: {
+        type: String,
+        default: ''
+    },
+    category: {
         type: String,
         default: ''
     },
@@ -76,8 +84,12 @@ const Company = new mongoose.model('Company', companySchema);
 function validateCompany(company) { 
     const schema = Joi.object({
         name: Joi.string().min(2).max(50).required(),
+        email: Joi.string().min(2).max(255).required().email(), // plain password
         password: Joi.string().min(6).max(1024).required(),
-        email: Joi.string().min(2).max(255).required().email() // plain password
+        address: Joi.string().min(2).max(50).required(),
+        website: Joi.string().min(2).max(50).required(),
+        phone: Joi.string().min(2).max(50).required(),
+        category: Joi.string().min(2).max(50).required()
     });
     return schema.validate(company);
 }
