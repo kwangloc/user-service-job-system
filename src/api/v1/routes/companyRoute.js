@@ -7,7 +7,8 @@ const admin = require('../middlewares/admin');
 // Testing route
 router.post('/test_1', companyController.test_1);
 
-router.post('/register', [auth, admin], companyController.createCompany);
+// router.post('admin/register', [auth, admin], companyController.createCompany);
+router.post('/register', companyController.createCompany);
 router.get('/profile/:companyId', companyController.getCompany);
 
 // Protected
