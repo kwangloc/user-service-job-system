@@ -5,7 +5,7 @@ const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/user_serv
 
 // Create a Winston logger
 const logger = winston.createLogger({
-    level: 'info',
+    level: 'error',
     format: winston.format.combine(
         winston.format.timestamp({
             format: 'YYYY-MM-DD HH:mm:ss'
